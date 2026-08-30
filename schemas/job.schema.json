@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RepEditJob",
+  "type": "object",
+  "required": ["job_id", "source_dir", "items"],
+  "properties": {
+    "job_id": { "type": "string" },
+    "source_dir": { "type": "string" },
+    "provider": { "type": "string", "enum": ["grok", "codex"] },
+    "model": { "type": "string", "default": "grok-imagine-image-2.0" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "condition", "inputs", "prompt_id", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "condition": {
+            "type": "string",
+            "enum": [
+              "interior_hdr",
+              "interior_single",
+              "exterior_single",
+              "virtual_twilight",
+              "drone",
+              "object_remove",
+              "declutter",
+              "yard_cleanup",
+              "window_pull",
+              "skipped"
+            ]
+          },
+          "inputs": {
+            "type": "object",
+            "properties": {
+              "middle": { "type": "string" },
+              "dark": { "type": "string" },
+              "bright": { "type": "string" },
+              "single": { "type": "string" }
+            }
+          },
+          "prompt_id": { "type": "string" },
+          "output": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "done", "skipped", "error"]
+          },
+          "flag": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+# exiftool argfile template for finalize. Placeholders in {BRACES} are filled
+# by Hermes per job/image. Run:
+#   exiftool -@ metadata_args.filled.txt -overwrite_original <file>
+-charset
+iptc=UTF8
+-IPTC:By-line={PHOTOGRAPHER}
+-XMP-dc:Creator={PHOTOGRAPHER}
+-IPTC:CopyrightNotice=(c) {YEAR} {BUSINESS_NAME}. All rights reserved.
+-XMP-dc:Rights=(c) {YEAR} {BUSINESS_NAME}. All rights reserved.
+-XMP-dc:Description={ADDRESS} - {CATEGORY} - MLS listing photo
+-IPTC:Caption-Abstract={ADDRESS} - {CATEGORY} - MLS listing photo
+-XMP-dc:Subject+=real estate
+-XMP-dc:Subject+={ADDRESS_SLUG}
+-XMP-photoshop:Credit={BUSINESS_NAME}
+# Disclosure (v1.1 — values come from config metadata.digital_source_type_*):
+#   Standard provider blend (generative exposure/tone merge):
+#     {DIGITAL_SOURCE_TYPE} = http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia
+#   Sky replacement or any generative element (disclosure.required=true):
+#     {DIGITAL_SOURCE_TYPE} = http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia
+#   If your MLS accepts the lighter tag for exposure-only blends, config may
+#   substitute algorithmicallyEnhanced. Verify all URIs against cv.iptc.org
+#   at build time.
+-XMP-iptcExt:DigitalSourceType={DIGITAL_SOURCE_TYPE}
+# Keep capture EXIF from the middle source RAW (exiftool -tagsFromFile), but:
+-Software=
+# IMPORTANT: do NOT add -XMP-c2pa:all= or any JUMBF removal here. Provider
+# output may carry C2PA content credentials and always carries SynthID;
+# preserve both — provenance supports MLS AI-disclosure compliance. Verify
+# with one real file at build time that this argfile leaves them intact.

@@ -1,0 +1,141 @@
+{
+  "job_id": "live-9",
+  "source_dir": "/fixtures/live-9jpeg",
+  "provider": "grok",
+  "model": "grok-imagine-image-2.0",
+  "created_at": "2026-08-28T20:58:28Z",
+  "items": [
+    {
+      "id": "int-hdr-01",
+      "condition": "interior_hdr",
+      "inputs": {
+        "middle": "/fixtures/live-9jpeg/_SA90017.jpg",
+        "dark": "/fixtures/live-9jpeg/_SA90021.jpg",
+        "bright": "/fixtures/live-9jpeg/_SA90019.jpg"
+      },
+      "prompt_id": "interior_hdr",
+      "status": "done",
+      "flag": "EXIF stripped; 3-EV grouped by sequence + scene luma",
+      "output": "/jobs/live-9/live-9_int-hdr-01_v003.jpg",
+      "output_name": "live-9_int-hdr-01_v003.jpg",
+      "result": "/jobs/live-9/live-9_int-hdr-01_v003.jpg",
+      "prompt": "Attach in this order: middle / dark / bright.\n\nBlend these three bracketed interior photos into one natural MLS interior.\n\nImage 1 is the middle exposure: use it for composition, geometry, furniture, color, and all property details.\nImage 2 is the dark exposure: use it only to recover windows, lamps, and clipped highlights.\nImage 3 is the bright exposure: use it only to recover shadows and dark corners.\n\nAlign the frames. Remove ghosting from curtains, fans, trees, and reflections. Recover only the real window view in the dark frame. Do not invent a view.\n\nBright, clean, dimensional interior. Neutral whites, real wood, controlled highlights, open shadows. No heavy HDR.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "60fd7640b2eee7527f71d63bd509ffcad72a39f45052a664881999b2826491f9",
+      "dry_run": false
+    },
+    {
+      "id": "skip-01",
+      "condition": "skipped",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90018.jpg"
+      },
+      "prompt_id": "",
+      "status": "skipped",
+      "flag": "duplicate exposure of an interior HDR stack; skipped rather than double-sending"
+    },
+    {
+      "id": "skip-02",
+      "condition": "skipped",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90020.jpg"
+      },
+      "prompt_id": "",
+      "status": "skipped",
+      "flag": "duplicate exposure of an interior HDR stack; skipped rather than double-sending"
+    },
+    {
+      "id": "int-01",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90016.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "flag": "EXIF stripped; classified interior (MLS-sized 3:2 still, no sky chroma)",
+      "output": "/jobs/live-9/live-9_int-01_v001.jpg",
+      "output_name": "live-9_int-01_v001.jpg",
+      "result": "/jobs/live-9/live-9_int-01_v001.jpg",
+      "prompt": "Attach the one interior JPEG.\n\nEdit this interior into a clean MLS photo. Brighten the room, keep real shadows, correct white balance, neutralize color casts. Recover window detail only if it exists. Do not invent an exterior view. Straighten verticals without stretching the room.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "f99178884c63ea005e5ca9d6ece7eb0d14cec656b6715b24d978c9927e80d5d4",
+      "dry_run": false
+    },
+    {
+      "id": "ext-01",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90381.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "flag": "EXIF stripped; classified exterior from sky chroma (not guessed architecture)",
+      "output": "/jobs/live-9/live-9_ext-01_v001.jpg",
+      "output_name": "live-9_ext-01_v001.jpg",
+      "result": "/jobs/live-9/live-9_ext-01_v001.jpg",
+      "prompt": "Attach the one exterior JPEG.\n\nEdit this exterior into a clean MLS photo. Brighten the house without flattening shadows. Recover sky detail if it exists. Keep siding, brick, roof, driveway, and foliage colors accurate. Grass stays natural, not neon. Straighten verticals without changing the house shape. Remove nothing unless listed.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "2cfbf1f32eafcbf8d1325c2ef449a4897fa1fc42e41a9e5c06eb8ac311c91d52",
+      "dry_run": false
+    },
+    {
+      "id": "ext-02",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90383.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "flag": "EXIF stripped; classified exterior from sky chroma (not guessed architecture)",
+      "output": "/jobs/live-9/live-9_ext-02_v001.jpg",
+      "output_name": "live-9_ext-02_v001.jpg",
+      "result": "/jobs/live-9/live-9_ext-02_v001.jpg",
+      "prompt": "Attach the one exterior JPEG.\n\nEdit this exterior into a clean MLS photo. Brighten the house without flattening shadows. Recover sky detail if it exists. Keep siding, brick, roof, driveway, and foliage colors accurate. Grass stays natural, not neon. Straighten verticals without changing the house shape. Remove nothing unless listed.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "2cfbf1f32eafcbf8d1325c2ef449a4897fa1fc42e41a9e5c06eb8ac311c91d52",
+      "dry_run": false
+    },
+    {
+      "id": "ext-03",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90385.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "flag": "EXIF stripped; classified exterior from sky chroma (not guessed architecture)",
+      "output": "/jobs/live-9/live-9_ext-03_v001.jpg",
+      "output_name": "live-9_ext-03_v001.jpg",
+      "result": "/jobs/live-9/live-9_ext-03_v001.jpg",
+      "prompt": "Attach the one exterior JPEG.\n\nEdit this exterior into a clean MLS photo. Brighten the house without flattening shadows. Recover sky detail if it exists. Keep siding, brick, roof, driveway, and foliage colors accurate. Grass stays natural, not neon. Straighten verticals without changing the house shape. Remove nothing unless listed.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "2cfbf1f32eafcbf8d1325c2ef449a4897fa1fc42e41a9e5c06eb8ac311c91d52",
+      "dry_run": false
+    },
+    {
+      "id": "vt-01",
+      "condition": "virtual_twilight",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90381.jpg"
+      },
+      "prompt_id": "virtual_twilight",
+      "status": "done",
+      "output": "/jobs/live-9/live-9_vt-01_VT_v001.jpg",
+      "output_name": "live-9_vt-01_VT_v001.jpg",
+      "result": "/jobs/live-9/live-9_vt-01_VT_v001.jpg",
+      "prompt": "Attach the daytime exterior. Optional second image: dark bracket if you have one.\n\nConvert this daytime exterior into a realistic early blue-hour virtual twilight.\n\nChange only time of day. Soft deep-blue sky with a lighter horizon. No purple sky, no storm, no sun, no stars, no moon.\nLower daylight so the house and yard stay visible. Not full night.\nAdd warm light only in existing windows and existing exterior fixtures. Varied window glow, not identical orange rectangles. No new windows or fixtures.\nKeep grass and landscaping visible and natural. Slightly brighter than a dark night render. Sharp, clean roofline mask. No glow leaking off the house.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "4b13e266f6bacf11a961fc51ac94e148e9112260319c050884c6bad33de2e52c",
+      "dry_run": false
+    },
+    {
+      "id": "vt-02",
+      "condition": "virtual_twilight",
+      "inputs": {
+        "single": "/fixtures/live-9jpeg/_SA90385.jpg"
+      },
+      "prompt_id": "virtual_twilight",
+      "status": "done",
+      "output": "/jobs/live-9/live-9_vt-02_VT_v001.jpg",
+      "output_name": "live-9_vt-02_VT_v001.jpg",
+      "result": "/jobs/live-9/live-9_vt-02_VT_v001.jpg",
+      "prompt": "Attach the daytime exterior. Optional second image: dark bracket if you have one.\n\nConvert this daytime exterior into a realistic early blue-hour virtual twilight.\n\nChange only time of day. Soft deep-blue sky with a lighter horizon. No purple sky, no storm, no sun, no stars, no moon.\nLower daylight so the house and yard stay visible. Not full night.\nAdd warm light only in existing windows and existing exterior fixtures. Varied window glow, not identical orange rectangles. No new windows or fixtures.\nKeep grass and landscaping visible and natural. Slightly brighter than a dark night render. Sharp, clean roofline mask. No glow leaking off the house.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark.\n",
+      "prompt_sha256": "4b13e266f6bacf11a961fc51ac94e148e9112260319c050884c6bad33de2e52c",
+      "dry_run": false
+    }
+  ]
+}

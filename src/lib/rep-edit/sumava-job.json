@@ -1,0 +1,659 @@
+{
+  "job_id": "sumava",
+  "source_dir": "card",
+  "provider": "grok",
+  "model": "grok-imagine-image-2.0",
+  "created_at": "2026-08-29T18:20:00Z",
+  "items": [
+    {
+      "id": "001",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_001_MLS.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_001_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_001_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_001_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "002",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_002_MLS.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_002_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_002_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_002_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "003",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_003_MLS.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_003_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_003_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_003_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "004",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_004_MLS.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_004_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_004_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_004_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "005",
+      "condition": "exterior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_005_MLS.jpg"
+      },
+      "prompt_id": "exterior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_005_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_005_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_005_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "006",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_006_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_006_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_006_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_006_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "007",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_007_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_007_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_007_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_007_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "008",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_008_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_008_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_008_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_008_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "009",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_009_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_009_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_009_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_009_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "010",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_010_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_010_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_010_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_010_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "011",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_011_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_011_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_011_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_011_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "012",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_012_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_012_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_012_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_012_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "013",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_013_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_013_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_013_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_013_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "014",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_014_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_014_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_014_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_014_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "015",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_015_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_015_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_015_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_015_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "016",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_016_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_016_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_016_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_016_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "017",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_017_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_017_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_017_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_017_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "018",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_018_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_018_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_018_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_018_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "019",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_019_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_019_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_019_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_019_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "020",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_020_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_020_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_020_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_020_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "021",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_021_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_021_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_021_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_021_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "022",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_022_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_022_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_022_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_022_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "023",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_023_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_023_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_023_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_023_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "024",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_024_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_024_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_024_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_024_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "025",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_025_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_025_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_025_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_025_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "026",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_026_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_026_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_026_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_026_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "027",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_027_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_027_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_027_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_027_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "028",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_028_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_028_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_028_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_028_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "029",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_029_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_029_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_029_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_029_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "030",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_030_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_030_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_030_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_030_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "031",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_031_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_031_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_031_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_031_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "032",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_032_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_032_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_032_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_032_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "033",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_033_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_033_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_033_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_033_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "034",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_034_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_034_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_034_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_034_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "035",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_035_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_035_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_035_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_035_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "036",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_036_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_036_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_036_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_036_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "037",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_037_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_037_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_037_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_037_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "038",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_038_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_038_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_038_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_038_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "039",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_039_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_039_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_039_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_039_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "040",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_040_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_040_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_040_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_040_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "041",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_041_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_041_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_041_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_041_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "042",
+      "condition": "interior_single",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_042_MLS.jpg"
+      },
+      "prompt_id": "interior_single",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_042_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_042_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_042_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "043",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_043_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_043_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_043_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_043_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "044",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_044_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_044_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_044_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_044_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "045",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_045_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_045_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_045_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_045_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "046",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_046_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_046_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_046_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_046_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "047",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_047_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_047_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_047_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_047_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "048",
+      "condition": "drone",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_048_MLS.jpg"
+      },
+      "prompt_id": "drone",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_048_MLS.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_048_MLS.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_048_MLS.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "050-VT",
+      "condition": "virtual_twilight",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_050_VT.jpg"
+      },
+      "prompt_id": "virtual_twilight",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_050_VT.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_050_VT.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_050_VT.jpg",
+      "dry_run": false
+    },
+    {
+      "id": "051-VT",
+      "condition": "virtual_twilight",
+      "inputs": {
+        "single": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_051_VT.jpg"
+      },
+      "prompt_id": "virtual_twilight",
+      "status": "done",
+      "output": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_051_VT.jpg",
+      "output_name": "11477_N_250_W_Sumava_Resorts_IN_46379_051_VT.jpg",
+      "result": "/jobs/sumava/11477_N_250_W_Sumava_Resorts_IN_46379_051_VT.jpg",
+      "dry_run": false
+    }
+  ]
+}

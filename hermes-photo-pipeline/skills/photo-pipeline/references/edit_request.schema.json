@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "hermes://photo-pipeline/edit_request.schema.json",
+  "title": "EditRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["job_id", "set_id", "category", "frames", "provider", "prompt_profile", "output", "constraints", "disclosure", "retry", "budget", "created_at"],
+  "properties": {
+    "job_id": { "type": "string", "pattern": "^\\d{8}[_-][a-z0-9-]+$" },
+    "set_id": { "type": "string", "pattern": "^set_\\d{3}$" },
+    "category": { "enum": ["interior", "exterior", "drone"] },
+    "frames": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["file", "ev", "sha256"],
+        "properties": {
+          "file": { "type": "string", "pattern": "\\.(jpg|jpeg)$" },
+          "ev": { "type": "number", "minimum": -5, "maximum": 5 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+        }
+      }
+    },
+    "provider": { "enum": ["nano-banana-2", "nano-banana-pro", "gpt-image-2"] },
+    "prompt_profile": { "type": "string", "pattern": "^(interior|exterior|drone)_v\\d+(_strict)?$" },
+    "output": {
+      "type": "object", "additionalProperties": false,
+      "required": ["long_edge", "aspect", "format"],
+      "properties": {
+        "long_edge": { "enum": [1024, 2048, 4096] },
+        "aspect": { "const": "match_source" },
+        "format": { "const": "jpeg" }
+      }
+    },
+    "constraints": {
+      "type": "object", "additionalProperties": false,
+      "required": ["preserve_layout", "no_add_remove", "sky_replacement", "window_view", "people"],
+      "properties": {
+        "preserve_layout": { "const": true },
+        "no_add_remove": { "const": true },
+        "sky_replacement": { "type": "boolean" },
+        "window_view": { "enum": ["preserve"] },
+        "people": { "enum": ["none_expected", "present_do_not_alter"] }
+      }
+    },
+    "disclosure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["required", "reason"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "reason": { "type": ["string", "null"] }
+      }
+    },
+    "retry": {
+      "type": "object", "additionalProperties": false,
+      "required": ["attempt", "max_attempts"],
+      "properties": {
+        "attempt": { "type": "integer", "minimum": 0 },
+        "max_attempts": { "type": "integer", "minimum": 0, "maximum": 3 }
+      }
+    },
+    "budget": {
+      "type": "object", "additionalProperties": false,
+      "required": ["max_usd_per_set"],
+      "properties": { "max_usd_per_set": { "type": "number", "exclusiveMinimum": 0, "maximum": 2 } }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "constraints": { "properties": { "sky_replacement": { "const": true } } } } },
+      "then": { "properties": { "disclosure": { "properties": { "required": { "const": true } } } } }
+    }
+  ]
+}

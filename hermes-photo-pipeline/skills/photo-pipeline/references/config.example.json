@@ -1,0 +1,58 @@
+{
+  "pipeline_root": "~/REPipeline",
+  "provider": "nano-banana-2",
+  "fallback_provider": "gpt-image-2",
+  "fallback_enabled": false,
+  "gemini_backend": "vertex",
+  "_gemini_backend_note": "vertex = Google Cloud / Vertex AI (use this if your $300 credits are Google Cloud trial credits; check their expiry, typically 90 days). ai_studio = Gemini API key from AI Studio.",
+  "models": {
+    "nano-banana-2": "PIN_EXACT_GEMINI_MODEL_STRING_AT_BUILD (Nano Banana 2 / Gemini 3.1 Flash Image, see ai.google.dev/models)",
+    "nano-banana-pro": "PIN_EXACT_GEMINI_MODEL_STRING_AT_BUILD (Nano Banana Pro / Gemini 3 Pro Image)",
+    "gpt-image-2": "PIN_EXACT_OPENAI_MODEL_STRING_AT_BUILD (see platform.openai.com/docs/models)",
+    "qa_judge": "PIN_GEMINI_FLASH_CLASS_MODEL_AT_BUILD (used for QA judging AND set classification; bills to Google credits)"
+  },
+  "output": { "long_edge": 2048, "format": "jpeg" },
+  "grouping": {
+    "gap_seconds": 2.5,
+    "min_ev_step": 0.5,
+    "max_ev_step": 4.0,
+    "raw_extensions": [".arw", ".dng"]
+  },
+  "retries": {
+    "max_attempts": 3,
+    "backoff_seconds": [30, 120, 480],
+    "_note": "max_attempts = TOTAL provider submissions per set. backoff[0,1] are in-attempt transient retries; backoff[2] is the wait between attempts."
+  },
+  "budget": {
+    "max_usd_per_set": 0.60,
+    "max_usd_per_job": 12.00,
+    "_note": "$12 fits the NB2 route (~$3.55/listing) with ~3x headroom. Raise before running the GPT route on a full listing."
+  },
+  "qa": {
+    "min_mean_score": 3.5,
+    "min_axis_score": 3,
+    "clip": {
+      "interior": { "white_pct_max": 0.5, "black_pct_max": 1.0 },
+      "exterior": { "white_pct_max": 2.0, "black_pct_max": 1.5 },
+      "drone":    { "white_pct_max": 3.0, "black_pct_max": 2.0 }
+    },
+    "near_duplicate_max_mean_abs_diff": 12,
+    "_near_duplicate_note": "0-255 scale on 256px downscales; result must differ from every input frame by MORE than this. Tune after first real job."
+  },
+  "naming": { "pattern": "{address_slug}_{nn}.jpg" },
+  "metadata": {
+    "photographer": "SET_ME",
+    "business_name": "SET_ME",
+    "digital_source_type_default": "http://cv.iptc.org/newscodes/digitalsourcetype/trainedAlgorithmicMedia",
+    "digital_source_type_sky_replacement": "http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia",
+    "_dst_note": "Default is trainedAlgorithmicMedia because the provider re-renders pixels generatively. If your MLS accepts algorithmicallyEnhanced for exposure-only blends, swap here. Verify URIs at cv.iptc.org at build time. Preserve C2PA/SynthID provenance."
+  },
+  "delivery": {
+    "r2_handoff_cmd": "SET_ME e.g. /usr/local/bin/deliver-listing --dir {delivery_dir} --variant {variant}",
+    "variants": ["branded", "unbranded"],
+    "branding_applied_by_r2_pipeline": true,
+    "_branding_note": "If false, deliver.py must STOP: without a watermark step the two variants are byte-identical."
+  },
+  "env_keys_required": ["GEMINI_API_KEY"],
+  "env_keys_optional": ["OPENAI_API_KEY"]
+}
