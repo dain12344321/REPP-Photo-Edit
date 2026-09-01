@@ -7,12 +7,17 @@ EditFn = Callable[..., Path]
 
 
 def get_provider(name: str) -> EditFn:
-    if name == "grok":
+    key = (name or "grok").strip().lower()
+    if key == "grok":
         from . import grok
 
         return grok.edit
-    if name == "codex":
+    if key in {"openrouter", "or", "router"}:
+        from . import openrouter
+
+        return openrouter.edit
+    if key == "codex":
         from . import codex
 
         return codex.edit
-    raise ValueError(f"unknown provider {name!r}")
+    raise ValueError(f"unknown provider {name!r} (use grok, openrouter, or codex)")

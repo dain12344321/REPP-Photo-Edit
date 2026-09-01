@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run a REP Edit job.json against Grok Imagine edits (or dry-run).
+"""Run a REP Edit job.json against Grok Imagine or OpenRouter (or dry-run).
 
 Loads shot prompts + keep-clause from prompts/imagine-shot-prompts.md.
 Never sends prompts/source-long-REFERENCE-ONLY.md.
@@ -24,7 +24,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run or dry-run a REP Edit job")
     parser.add_argument("job", type=Path, help="Path to job.json")
     parser.add_argument("--dry-run", action="store_true", help="Plan outputs and sidecars; no API calls")
-    parser.add_argument("--provider", default="", help="Override job.provider (grok|codex)")
+    parser.add_argument("--provider", default="", help="Override job.provider (grok|openrouter|codex)")
     parser.add_argument("--item", action="append", default=[], help="Only these item ids (repeatable)")
     parser.add_argument("--limit", type=int, default=0, help="Max live edits this invocation")
     parser.add_argument("--prompts", type=Path, default=None, help="Override prompt pack path")
@@ -36,7 +36,7 @@ def main(argv: list[str] | None = None) -> int:
 
     pack = load_prompt_pack(args.prompts)
     provider_name = args.provider or job.get("provider") or "grok"
-    model = job.get("model") or "grok-imagine-image-2.0"
+    model = job.get("model") or ""
     edit = get_provider(provider_name)
 
     wanted = set(args.item)
@@ -71,7 +71,7 @@ def main(argv: list[str] | None = None) -> int:
                 item=item,
                 prompt=prompt,
                 prompt_id=item["prompt_id"],
-                model=model,
+                model=model or provider_name,
                 dry_run=args.dry_run,
                 extra={"provider": provider_name, "pack_version": pack.version_line},
             )
@@ -87,7 +87,10 @@ def main(argv: list[str] | None = None) -> int:
             continue
 
         try:
-            edit(images, prompt, out_path, dry_run=False, model=model)
+            kwargs = {"dry_run": False}
+            if model:
+                kwargs["model"] = model
+            edit(images, prompt, out_path, **kwargs)
             item["status"] = "done"
             live_done += 1
             print(f"done     {item['id']:16} {item['condition']:20} → {out_path}")
