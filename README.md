@@ -2,16 +2,16 @@
 
 Local stills pipeline for Lakeshore Listing Media. Pixel prompts are frozen in
 `prompts/imagine-shot-prompts.md`. The console inspects ingest, classification,
-and Imagine edits. Photo-to-video, parcel outlines, and gallery-wide generative
+and image edits. Photo-to-video, parcel outlines, and gallery-wide generative
 matching are out of scope.
 
 ## Frozen files
 
 | File | Role |
 | --- | --- |
-| `prompts/imagine-shot-prompts.md` | Only text sent to Imagine (shot + keep-clause) |
+| `prompts/imagine-shot-prompts.md` | Only text sent to the editor (shot + keep-clause) |
 | `prompts/source-short.md` | Proven short pack, human reference |
-| `prompts/source-long-REFERENCE-ONLY.md` | QC language and disclosure labels. Never send to Imagine. |
+| `prompts/source-long-REFERENCE-ONLY.md` | QC language and disclosure labels. Never send to the editor. |
 | `schemas/job.schema.json` | `job.json` shape |
 
 ## Workflow
@@ -21,8 +21,8 @@ matching are out of scope.
    `ExposureBiasValue` + `DateTimeOriginal` + filename sequence. If EXIF is
    stripped, fall back to sequence + same-scene luma (never invent a view).
 3. Classify into the listed conditions only. If uncertain, skip and flag.
-4. Build one Imagine prompt = shot prompt + sticky keep-clause.
-5. Call Grok Imagine **edit** (JSON, not OpenAI multipart).
+4. Build one edit prompt = shot prompt + sticky keep-clause.
+5. Call the selected provider **edit** (JSON image-to-image, not text-to-image).
 6. Write versioned outputs (`*_v001.jpg`). Never overwrite finals.
 7. Write a sidecar JSON next to each output.
 
@@ -40,79 +40,70 @@ python scripts/ingest.py fixtures/dry-run-9jpeg --job-id dry-run --out jobs/dry-
 python scripts/run_job.py jobs/dry-run/job.json --dry-run
 ```
 
-Nine JPEGs become the Codex six-stack test: two interior HDR stacks, two
-exteriors, two virtual-twilight candidates, plus one drone still. No Imagine
-call. Sidecars land in `jobs/dry-run/outputs/*_v001.json`.
-
-## Live run
+## Live run — xAI (default)
 
 Requires `XAI_API_KEY`. Middle frame is geometry authority. Attach order for
-HDR is always middle, dark, bright. Twilight is time-of-day only.
+HDR is always middle, dark, bright.
 
 ```bash
+export XAI_API_KEY=xai-...
 python scripts/ingest.py jobs/live-9/inbox --job-id live-9 --out jobs/live-9/job.json
 python scripts/run_job.py jobs/live-9/job.json
 ```
 
-Proven on the last nine Sony stills: 7 live 2K edits, 2 duplicate exposures
-skipped. Outputs in `jobs/live-9/outputs/*_v001.jpg`.
+## Live run — OpenRouter
+
+Same pipeline, different provider. Get a key at [openrouter.ai/keys](https://openrouter.ai/keys).
+
+```bash
+export OPENROUTER_API_KEY=sk-or-...
+# optional — defaults to x-ai/grok-imagine-image-quality
+export OPENROUTER_MODEL=x-ai/grok-imagine-image-quality
+python scripts/run_job.py jobs/live-9/job.json --provider openrouter
+```
+
+Or set `"provider": "openrouter"` in `job.json`. Other image models that accept
+`input_references` also work, e.g. `google/gemini-2.5-flash-image` or
+`bytedance-seed/seedream-4.5`.
+
+```bash
+curl -X POST https://openrouter.ai/api/v1/images \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+  -d '{
+    "model": "x-ai/grok-imagine-image-quality",
+    "prompt": "<shot prompt + keep-clause>",
+    "aspect_ratio": "3:2",
+    "resolution": "2K",
+    "output_format": "jpeg",
+    "input_references": [
+      { "type": "image_url", "image_url": { "url": "data:image/jpeg;base64,..." } }
+    ]
+  }'
+```
 
 Single-item re-run:
 
 ```bash
-python scripts/run_job.py jobs/dry-run/job.json --item ext-01
+python scripts/run_job.py jobs/dry-run/job.json --item ext-01 --provider openrouter
 ```
 
 ## Mac Mini / Grokbot / Drive
 
-This is a local Python client. Imagine is the only network call.
+This is a local Python client. The image editor is the only network call.
 
 | How | What you run |
 | --- | --- |
 | Mac Mini | `python scripts/watch_inbox.py ~/rep-edit/inbox --out ~/rep-edit/out` |
 | Drive drop | rclone the inbox in, rclone the out folder back |
-| Grokbot / Hermes | same `ingest.py` + `run_job.py` + `XAI_API_KEY` |
-| This preview | already the live desk |
+| Grokbot / Hermes | same `ingest.py` + `run_job.py` + API key |
 
 ```bash
-# one-shot from a card dump
 python scripts/ingest.py ~/rep-edit/inbox --job-id shoot --out ~/rep-edit/out/job.json
-python scripts/run_job.py ~/rep-edit/out/job.json
-
-# poll a folder (settles 8s after the last JPEG lands)
-python scripts/watch_inbox.py ~/rep-edit/inbox --out ~/rep-edit/out --interval 30
-
-# Drive in / Drive out (rclone remote named Drive)
-rclone sync "Drive:rep-edit-inbox" ~/rep-edit/inbox
-python scripts/watch_inbox.py ~/rep-edit/inbox --out ~/rep-edit/out --once
-rclone copy ~/rep-edit/out "Drive:rep-edit-out"
+python scripts/run_job.py ~/rep-edit/out/job.json --provider openrouter
 ```
 
-Needs: Python 3.10+, `XAI_API_KEY`, optional rclone. It will not run fully offline —
-edits POST to `api.x.ai`. Classification, grouping, and naming all run on the Mini.
-
-## Live API shape (do not change)
-
-
-```bash
-curl -X POST https://api.x.ai/v1/images/edits \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $XAI_API_KEY" \
-  -d '{
-    "model": "grok-imagine-image-2.0",
-    "prompt": "<shot prompt + keep-clause>",
-    "aspect_ratio": "3:2",
-    "resolution": "2k",
-    "images": [
-      { "type": "image_url", "url": "data:image/jpeg;base64,..." }
-    ]
-  }'
-```
-
-One image: you may also send a single `"image": { "url": "...", "type": "image_url" }`.
-Three-bracket HDR: send middle, dark, bright as `images[0..2]`.
-
-Do not use OpenAI multipart `images.edit()` against api.x.ai.
+Needs: Python 3.10+, `XAI_API_KEY` and/or `OPENROUTER_API_KEY`.
 
 ## Provider interface
 
@@ -120,14 +111,11 @@ Do not use OpenAI multipart `images.edit()` against api.x.ai.
 def edit(images: list[Path], prompt: str, out_path: Path) -> Path: ...
 ```
 
-`providers/grok.py` is live. `providers/codex.py` is a stub with the same
-signature. Swap later with `--provider codex`.
-
-To run this on your own domain (Cloudflare Worker, VPS, or the edit desk),
-copy `rep_edit/`, `providers/`, `scripts/`, `prompts/`, and `schemas/`. Set
-`XAI_API_KEY` as a secret. The Worker just POSTs JSON to
-`https://api.x.ai/v1/images/edits` — same body as the curl above. 2K
-three-frame HDR payloads need a paid Worker request-size limit.
+| Provider | Module | Auth |
+| --- | --- | --- |
+| `grok` (default) | `providers/grok.py` | `XAI_API_KEY` → `api.x.ai/v1/images/edits` |
+| `openrouter` | `providers/openrouter.py` | `OPENROUTER_API_KEY` → `openrouter.ai/api/v1/images` |
+| `codex` | `providers/codex.py` | stub |
 
 ## Conditions
 
@@ -137,20 +125,6 @@ three-frame HDR payloads need a paid Worker request-size limit.
 
 Do not invent extra conditions. Prefer skip + flag over a guessed window view
 or a guessed parcel line. Preserve Sony 3:2. Do not crop to 16:9 / 4:3 / square.
-
-## Brief overrides
-
-Optional `brief.json` in the source folder:
-
-```json
-{
-  "twilight_from_exteriors": true,
-  "object_remove": { "DSC00010.JPG": ["trash bin", "hose"] },
-  "declutter": ["DSC00011.JPG"],
-  "yard_cleanup": ["DSC00012.JPG"],
-  "window_pull": [{ "interior": "DSC00001_INT_A_m.jpg", "dark": "DSC00002_INT_A_d.jpg" }]
-}
-```
 
 ## Tests
 
