@@ -5,7 +5,7 @@ import { DRIVE_FOLDERS } from "@/lib/rep-edit/folders";
 
 export const Route = createFileRoute("/")({ component: Home });
 
-const DOWNLOAD_URL = "https://github.com/dain12344321/REPP-Photo-Edit/archive/refs/heads/main.zip";
+const DOWNLOAD_URL = "https://github.com/dain12344321/REPP-Photo-Edit";
 
 function Home() {
   return (

@@ -2,7 +2,7 @@
 
 Standalone listing-stills app. Sign in with X. Drop a Sony card. Imagine at 2K. Deliver to Drive.
 
-**Download:** [Zip of main](https://github.com/dain12344321/REPP-Photo-Edit/archive/refs/heads/main.zip) · **Repo:** [dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
+**Download:** [GitHub](https://github.com/dain12344321/REPP-Photo-Edit) (Code → Download ZIP) · **Repo:** [dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
 
 The shipped photo is the lakeshorelisting.media hero. Gallery, jobs, and OUTBOX start empty and fill from ingest.
 
