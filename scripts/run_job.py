@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
 
 from providers import get_provider
 from rep_edit.job import planned_prompt, validate_job, write_job, write_sidecar
+from rep_edit.prepare import output_is_2k, output_long_edge
 from rep_edit.prompts import load_prompt_pack
 
 
@@ -93,6 +94,12 @@ def main(argv: list[str] | None = None) -> int:
             edit(images, prompt, out_path, **kwargs)
             item["status"] = "done"
             live_done += 1
+            if out_path.exists() and not output_is_2k(out_path):
+                item["flag"] = (
+                    f"output long edge {output_long_edge(out_path)} px is under 2K "
+                    "(need ≥ 1920). Do not deliver until re-run at resolution=2k quality=medium."
+                )
+                print(f"warn     {item['id']:16} {item['flag']}")
             print(f"done     {item['id']:16} {item['condition']:20} → {out_path}")
         except Exception as exc:  # noqa: BLE001 — surface provider errors on the item
             item["status"] = "error"

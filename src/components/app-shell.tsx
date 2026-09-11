@@ -1,4 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
+import { UserButton } from "@/lib/auth/gates";
+import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -6,9 +8,31 @@ const NAV = [
   { to: "/ingest", label: "Ingest" },
   { to: "/job/$jobId", label: "Job" },
   { to: "/prompts", label: "Prompts" },
-  { to: "/qc", label: "QC" },
-  { to: "/run", label: "Run" },
+  { to: "/qc", label: "Gallery" },
+  { to: "/run", label: "Drive" },
 ] as const;
+
+function AuthSlot() {
+  const { user, isPending } = useCurrentUserState();
+  if (isPending) {
+    return <div className="h-8 w-8 shrink-0 animate-pulse rounded-full bg-paper/20" />;
+  }
+  if (user) {
+    return (
+      <div className="text-paper [&_span]:text-paper [&_button]:text-paper/70">
+        <UserButton />
+      </div>
+    );
+  }
+  return (
+    <Link
+      to="/login"
+      className="rounded-full px-4 py-2 text-xs font-medium tracking-[0.12em] text-paper/75 uppercase hover:text-paper"
+    >
+      Sign in
+    </Link>
+  );
+}
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -26,29 +50,32 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               REP Edit
             </span>
           </Link>
-          <nav className="flex flex-wrap gap-1" aria-label="Primary">
-            {NAV.map((item) => {
-              const active =
-                item.to === "/"
-                  ? pathname === "/"
-                  : item.to === "/job/$jobId"
-                    ? pathname.startsWith("/job")
-                    : pathname === item.to || pathname.startsWith(item.to);
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  params={item.to === "/job/$jobId" ? { jobId: "demo" } : undefined}
-                  className={cn(
-                    "rounded-full px-4 py-2 text-xs font-medium tracking-[0.12em] uppercase transition-colors duration-200",
-                    active ? "bg-paper text-ink" : "text-paper/75 hover:text-paper",
-                  )}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </nav>
+          <div className="flex flex-wrap items-center gap-1">
+            <nav className="flex flex-wrap gap-1" aria-label="Primary">
+              {NAV.map((item) => {
+                const active =
+                  item.to === "/"
+                    ? pathname === "/"
+                    : item.to === "/job/$jobId"
+                      ? pathname.startsWith("/job")
+                      : pathname === item.to || pathname.startsWith(item.to);
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    params={item.to === "/job/$jobId" ? { jobId: "demo" } : undefined}
+                    className={cn(
+                      "rounded-full px-4 py-2 text-xs font-medium tracking-[0.12em] uppercase transition-colors duration-200",
+                      active ? "bg-paper text-ink" : "text-paper/75 hover:text-paper",
+                    )}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+            <AuthSlot />
+          </div>
         </div>
         <div className="h-px bg-brand/40" />
       </header>
@@ -56,14 +83,22 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="bg-header text-paper/70">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-3 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p className="font-mono text-[11px] tracking-[0.14em] uppercase">
-            Lakeshore Listing Media · grok-imagine-image-2.0 · Sony 3:2 · window-truth
+            Lakeshore Listing Media
           </p>
-          <a
-            href="https://lakeshorelisting.media"
-            className="text-xs tracking-[0.12em] text-brand uppercase hover:text-paper"
-          >
-            lakeshorelisting.media
-          </a>
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="https://github.com/dain12344321/REPP-Photo-Edit"
+              className="text-xs tracking-[0.12em] text-brand uppercase hover:text-paper"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://lakeshorelisting.media"
+              className="text-xs tracking-[0.12em] text-brand uppercase hover:text-paper"
+            >
+              lakeshorelisting.media
+            </a>
+          </div>
         </div>
       </footer>
     </div>

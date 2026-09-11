@@ -1,121 +1,77 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Download } from "lucide-react";
+import { DRIVE_FOLDERS } from "@/lib/rep-edit/folders";
 
 export const Route = createFileRoute("/run")({ component: RunPage });
+
+const LISTINGS = [
+  {
+    name: "1642 Flag Ct, Crown Point, IN 46307",
+    inbox: "https://drive.google.com/drive/folders/1cCkhmwbjaEx5E7MAlFKi5oeOZBo_HNq-",
+    outbox: "https://drive.google.com/drive/folders/1NErlIfipK_xQf4aLN-uPRDSTajkUE687",
+  },
+  {
+    name: "405 N Main St, Wanatah, IN 46390",
+    inbox: "https://drive.google.com/drive/folders/1V1so2_Xvn5CX2w3PLLGyY-YlcT3gF3i5",
+    outbox: "https://drive.google.com/drive/folders/1QRP9oHkTO7w9AZI6xCvvo0G_wueiI6KA",
+  },
+];
 
 function RunPage() {
   return (
     <div className="space-y-10">
-      <header className="rise max-w-2xl">
-        <p className="eyebrow">Hermes · Cloudflare · Drive</p>
-        <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">Same pack. Three hosts.</h1>
-        <p className="mt-3 text-muted">
-          Pixel prompts stay in <span className="font-mono text-sm">prompts/imagine-shot-prompts.md</span>.
-          Model is <span className="font-mono text-sm">grok-imagine-image-2.0</span> via{" "}
-          <span className="font-mono text-sm">POST /v1/images/edits</span>. Auth is an xAI API key
-          on the server, or a Hermes session that already has xAI.
+      <header>
+        <p className="eyebrow">Drive</p>
+        <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">INBOX and OUTBOX</h1>
+        <p className="mt-3 max-w-xl text-muted">
+          Card dumps in. Delivered stills out. One folder per listing.
         </p>
       </header>
 
-      <section className="grid gap-6 lg:grid-cols-3">
+      <section className="grid gap-6 lg:grid-cols-2">
         <article className="rounded-md border border-line bg-paper p-5">
-          <p className="font-mono text-[11px] text-steel">01</p>
-          <h2 className="mt-1 font-display text-xl">This console</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
-            Drop a card on Ingest. Classify. Run one 2K edit at a time. The
-            injected xAI key never leaves the server.
-          </p>
-          <Link to="/ingest" className="mt-4 inline-block text-sm text-cta underline-offset-4 hover:underline">
-            Open ingest
-          </Link>
-        </article>
-        <article className="rounded-md border border-line bg-paper p-5">
-          <p className="font-mono text-[11px] text-steel">02</p>
-          <h2 className="mt-1 font-display text-xl">Hermes agent</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
-            Download the zip. Point Hermes at the repo. Copy{" "}
-            <span className="font-mono text-[12px]">.grok/skills/rep-edit/</span> into the
-            agent skills folder. Drop a card in <span className="font-mono text-[12px]">inbox/</span>.
-          </p>
+          <p className="font-mono text-[11px] text-steel">INBOX</p>
+          <h2 className="mt-1 font-display text-xl">Card dumps</h2>
           <a
-            href="/lakeshore-rep-edit.zip"
-            download="lakeshore-rep-edit.zip"
-            className="mt-4 inline-flex items-center gap-2 text-sm text-cta underline-offset-4 hover:underline"
+            href={DRIVE_FOLDERS.inboxUrl}
+            className="mt-4 inline-block text-sm text-cta underline-offset-4 hover:underline"
           >
-            <Download className="size-4" />
-            lakeshore-rep-edit.zip
+            Open INBOX
           </a>
         </article>
         <article className="rounded-md border border-line bg-paper p-5">
-          <p className="font-mono text-[11px] text-steel">03</p>
-          <h2 className="mt-1 font-display text-xl">Cloudflare</h2>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
-            Run the console on a Mac Mini, tunnel it, CNAME{" "}
-            <span className="font-mono text-[12px]">edit.lakeshorelisting.media</span>. Keep
-            the key in the process environment. Never in Vite.
-          </p>
+          <p className="font-mono text-[11px] text-steel">OUTBOX</p>
+          <h2 className="mt-1 font-display text-xl">Delivered stills</h2>
+          <a
+            href={DRIVE_FOLDERS.outboxUrl}
+            className="mt-4 inline-block text-sm text-cta underline-offset-4 hover:underline"
+          >
+            Open OUTBOX
+          </a>
         </article>
       </section>
 
       <section>
-        <h2 className="font-display text-2xl">Hermes — Mac Mini</h2>
-        <pre className="mt-4 overflow-auto rounded-md bg-ink p-5 font-mono text-[12px] leading-relaxed text-paper-2">{`# 1. Unzip next to an inbox
-python3 -m pip install -r requirements.txt
-export XAI_API_KEY=xai-...          # console.x.ai — API key, not a Grok cookie
-
-# 2. Drop Sony JPEGs (+ optional DJI folder) into inbox/
-python3 scripts/ingest.py inbox --job-id listing --out jobs/listing/job.json
-python3 scripts/run_job.py jobs/listing/job.json
-
-# or watch a Drive-synced folder
-python3 scripts/watch_inbox.py inbox --out jobs/listing --once
-
-# 3. Push jobs/listing/outputs/ into that property's Grok_2K
-#    DELIVERED CLIENT ASSETS (by Property)/{address}/Grok_2K/`}</pre>
+        <h2 className="font-display text-xl">Listings</h2>
+        <ul className="mt-4 divide-y divide-line overflow-hidden rounded-md border border-line bg-paper">
+          {LISTINGS.map((row) => (
+            <li key={row.name} className="flex flex-col gap-2 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+              <span className="text-ink">{row.name}</span>
+              <span className="flex gap-4 text-sm">
+                <a href={row.inbox} className="text-steel underline-offset-4 hover:underline">
+                  Card
+                </a>
+                <a href={row.outbox} className="text-steel underline-offset-4 hover:underline">
+                  Delivery
+                </a>
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
 
-      <section>
-        <h2 className="font-display text-2xl">Cloudflare tunnel</h2>
-        <pre className="mt-4 overflow-auto rounded-md bg-ink p-5 font-mono text-[12px] leading-relaxed text-paper-2">{`npm install
-export XAI_API_KEY=xai-...
-npm run dev -- --host 0.0.0.0 --port 8080
-# other terminal
-cloudflared tunnel --url http://127.0.0.1:8080
-# named tunnel: CNAME edit.lakeshorelisting.media → the tunnel`}</pre>
-      </section>
-
-      <section>
-        <h2 className="font-display text-2xl">Google Drive</h2>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
-          Input is the card dump. Output is{" "}
-          <span className="font-mono text-[12px]">Grok_2K</span> inside the property folder
-          under <span className="font-medium text-ink">DELIVERED CLIENT ASSETS (by Property)</span>.
-          Original <span className="font-mono text-[12px]">MLS Listing Photos/</span> stays
-          read-only. Pair Hermes with rclone:
-        </p>
-        <pre className="mt-4 overflow-auto rounded-md bg-ink p-5 font-mono text-[12px] leading-relaxed text-paper-2">{`rclone sync "Drive:DELIVERED CLIENT ASSETS (by Property)/…/SD card dump" ./inbox
-python3 scripts/watch_inbox.py ./inbox --out ./out --once
-rclone copy ./out "Drive:DELIVERED CLIENT ASSETS (by Property)/…/Grok_2K"`}</pre>
-        <p className="mt-3 text-sm text-muted">
-          In this Grok-hosted console, Drive browse finds the folder. JPEGs still
-          drop here or run on Hermes — the gate does not stream card dumps.
-        </p>
-      </section>
-
-      <section className="rounded-md border border-line bg-paper p-5 text-sm leading-relaxed text-muted">
-        <p>
-          GitHub:{" "}
-          <a
-            href="https://github.com/dain12344321/REPP-Photo-Edit"
-            className="text-cta underline-offset-4 hover:underline"
-          >
-            dain12344321/REPP-Photo-Edit
-          </a>
-          . Skill: <span className="font-mono text-[12px]">.grok/skills/rep-edit/SKILL.md</span>.
-          Do not run <span className="font-mono text-[12px]">hermes-photo-pipeline/</span> for MLS
-          stills — that is the Photomator comparison skill.
-        </p>
-      </section>
+      <Link to="/ingest" className="inline-block text-sm text-cta underline-offset-4 hover:underline">
+        Ingest a card
+      </Link>
     </div>
   );
 }

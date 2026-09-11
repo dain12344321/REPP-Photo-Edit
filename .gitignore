@@ -5,7 +5,9 @@ node_modules/
 .env.*
 .tanstack/
 .vercel/
-.grok/
+.grok/*
+!.grok/skills/
+!.grok/skills/**
 artifacts/
 attachments/
 jobs/

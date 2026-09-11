@@ -1,136 +1,72 @@
 # Lakeshore REP Edit
 
-Local stills pipeline for Lakeshore Listing Media. Pixel prompts are frozen in
-`prompts/imagine-shot-prompts.md` (version **2026-09-11-window-truth**).
-The console classifies a card dump and runs Grok Imagine image-edit. Photo-to-video,
-parcel outlines, and gallery-wide generative matching are out of scope.
+Sony card in. 2K MLS stills out. This repo is the product.
 
-**Window truth:** recover a view only when the dark frame actually contains one.
-Frosted bathroom glass stays frosted. Do not invent scenery outside the pane.
-
-## Frozen files
-
-| File | Role |
-| --- | --- |
-| `prompts/imagine-shot-prompts.md` | Only text sent to the editor (shot + keep-clause) |
-| `prompts/source-short.md` | Proven short pack, human reference |
-| `prompts/source-long-REFERENCE-ONLY.md` | QC language and disclosure labels. Never send to the editor. |
-| `schemas/job.schema.json` | `job.json` shape |
-
-## Workflow
-
-1. Ingest a folder of Sony JPEGs (`scripts/ingest.py`).
-2. Group 3-EV interior stacks as middle / dark / bright using EXIF
-   `ExposureBiasValue` + `DateTimeOriginal` + filename sequence. If EXIF is
-   stripped, fall back to sequence + same-scene luma (never invent a view).
-3. Classify into the listed conditions only. If uncertain, skip and flag.
-4. Build one edit prompt = shot prompt + sticky keep-clause.
-5. Call the selected provider **edit** (JSON image-to-image, not text-to-image).
-6. Write versioned outputs (`*_v001.jpg`). Never overwrite finals.
-7. Write a sidecar JSON next to each output.
-
-## Install
+**Clone it:** [github.com/dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/dain12344321/REPP-Photo-Edit.git
+cd REPP-Photo-Edit
 ```
 
-## Dry-run (no API)
+Two runtimes, same prompt pack (`prompts/imagine-shot-prompts.md`) and same model (`grok-imagine-image-2.0`, quality medium, 2K).
+
+## 1. Local / Hermes (Python)
+
+For a Mac Mini, a Hermes agent, or a headless watcher.
 
 ```bash
-python scripts/make_dry_run_fixture.py fixtures/dry-run-9jpeg
-python scripts/ingest.py fixtures/dry-run-9jpeg --job-id dry-run --out jobs/dry-run/job.json
-python scripts/run_job.py jobs/dry-run/job.json --dry-run
+python3 -m pip install -r requirements.txt
+export XAI_API_KEY=xai-...          # console.x.ai API key
+python3 scripts/ingest.py inbox --job-id listing --out jobs/listing/job.json
+python3 scripts/run_job.py jobs/listing/job.json
 ```
 
-## Live run — xAI (default)
-
-Requires `XAI_API_KEY`. Middle frame is geometry authority. Attach order for
-HDR is always middle, dark, bright.
+Dry run (no API):
 
 ```bash
+python3 scripts/make_dry_run_fixture.py fixtures/dry-run-9jpeg
+python3 scripts/ingest.py fixtures/dry-run-9jpeg --job-id dry-run --out jobs/dry-run/job.json
+python3 scripts/run_job.py jobs/dry-run/job.json --dry-run
+```
+
+Operator rules: [INSTRUCTIONS.md](INSTRUCTIONS.md). Drive IDs: [FOLDERS.md](FOLDERS.md). Hermes notes: [README_HERMES.md](README_HERMES.md).
+
+## 2. Hosted web console
+
+The Grok Build app is the hosted console — ingest a card, sign in, talk to Drive.
+
+To host it yourself (Node 22):
+
+```bash
+npm install
 export XAI_API_KEY=xai-...
-python scripts/ingest.py jobs/live-9/inbox --job-id live-9 --out jobs/live-9/job.json
-python scripts/run_job.py jobs/live-9/job.json
+npm run dev -- --host 0.0.0.0 --port 8080
 ```
 
-## Live run — OpenRouter
-
-Same pipeline, different provider. Get a key at [openrouter.ai/keys](https://openrouter.ai/keys).
+Point a Cloudflare tunnel at it if you want a public URL on your domain:
 
 ```bash
-export OPENROUTER_API_KEY=sk-or-...
-# optional — defaults to x-ai/grok-imagine-image-quality
-export OPENROUTER_MODEL=x-ai/grok-imagine-image-quality
-python scripts/run_job.py jobs/live-9/job.json --provider openrouter
+cloudflared tunnel --url http://127.0.0.1:8080
 ```
 
-Or set `"provider": "openrouter"` in `job.json`. Other image models that accept
-`input_references` also work, e.g. `google/gemini-2.5-flash-image` or
-`bytedance-seed/seedream-4.5`.
+Production build of this stack deploys as a TanStack Start / Vercel app (`npm run build`). A native Cloudflare Workers rewrite is not in this repo.
 
-```bash
-curl -X POST https://openrouter.ai/api/v1/images \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $OPENROUTER_API_KEY" \
-  -d '{
-    "model": "x-ai/grok-imagine-image-quality",
-    "prompt": "<shot prompt + keep-clause>",
-    "aspect_ratio": "3:2",
-    "resolution": "2K",
-    "output_format": "jpeg",
-    "input_references": [
-      { "type": "image_url", "image_url": { "url": "data:image/jpeg;base64,..." } }
-    ]
-  }'
-```
+## Drive
 
-Single-item re-run:
+| | |
+|---|---|
+| INBOX | [Card dumps](https://drive.google.com/drive/folders/1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ) |
+| OUTBOX | [Delivered stills](https://drive.google.com/drive/folders/1-W86toL_viRDEoyXX5JMR0ab68g2x62G) |
 
-```bash
-python scripts/run_job.py jobs/dry-run/job.json --item ext-01 --provider openrouter
-```
+One folder per listing. INBOX is read-only source. OUTBOX is the only write target.
 
-## Mac Mini / Grokbot / Drive
+## Layout
 
-This is a local Python client. The image editor is the only network call.
-
-| How | What you run |
-| --- | --- |
-| Mac Mini | `python scripts/watch_inbox.py ~/rep-edit/inbox --out ~/rep-edit/out` |
-| Drive drop | rclone the inbox in, rclone the out folder back |
-| Grokbot / Hermes | same `ingest.py` + `run_job.py` + API key |
-
-```bash
-python scripts/ingest.py ~/rep-edit/inbox --job-id shoot --out ~/rep-edit/out/job.json
-python scripts/run_job.py ~/rep-edit/out/job.json --provider openrouter
-```
-
-Needs: Python 3.10+, `XAI_API_KEY` and/or `OPENROUTER_API_KEY`.
-
-## Provider interface
-
-```python
-def edit(images: list[Path], prompt: str, out_path: Path) -> Path: ...
-```
-
-| Provider | Module | Auth |
-| --- | --- | --- |
-| `grok` (default) | `providers/grok.py` | `XAI_API_KEY` → `api.x.ai/v1/images/edits` |
-| `openrouter` | `providers/openrouter.py` | `OPENROUTER_API_KEY` → `openrouter.ai/api/v1/images` |
-| `codex` | `providers/codex.py` | stub |
-
-## Conditions
-
-`interior_hdr` · `interior_single` · `exterior_single` · `virtual_twilight` ·
-`drone` · `object_remove` · `declutter` · `yard_cleanup` · `window_pull` ·
-`skipped`
-
-Do not invent extra conditions. Prefer skip + flag over a guessed window view
-or a guessed parcel line. Preserve Sony 3:2. Do not crop to 16:9 / 4:3 / square.
-
-## Tests
-
-```bash
-python -m unittest tests.test_rep_edit -v
-```
+| Path | Role |
+|---|---|
+| `prompts/imagine-shot-prompts.md` | Frozen Imagine pack |
+| `INSTRUCTIONS.md` | Operator instruction set |
+| `rep_edit/` + `scripts/` | Python ingest / edit / watcher |
+| `providers/grok.py` | `POST /v1/images/edits` |
+| `src/` | Web console |

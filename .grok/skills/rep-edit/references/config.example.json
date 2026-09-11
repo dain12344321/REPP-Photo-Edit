@@ -3,12 +3,12 @@
   "model": "grok-imagine-image-2.0",
   "aspect_ratio": "3:2",
   "resolution": "2k",
+  "quality": "medium",
   "inbox": "inbox",
   "out": "jobs/listing",
   "twilight_from_exteriors": true,
   "drive": {
-    "root": "DELIVERED CLIENT ASSETS (by Property)",
-    "output_folder": "Grok_2K",
-    "mls_handoff": "MLS Listing Photos"
+    "inbox_id": "1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ",
+    "outbox_id": "1-W86toL_viRDEoyXX5JMR0ab68g2x62G"
   }
 }

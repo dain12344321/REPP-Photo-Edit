@@ -36,10 +36,9 @@ CNAME `edit.lakeshorelisting.media` at a named tunnel if you want it on the doma
 
 ## Grokbot
 
-On revisit: read `AGENTS.rep-edit.md` then `.grok/skills/rep-edit/SKILL.md`. Pixel prompts stay in `prompts/imagine-shot-prompts.md` (version **2026-09-11-window-truth**). Frosted / privacy glass stays as photographed. Drive layout in `FOLDERS.md`. Locked Sumava pack notes in `SNAPSHOT.md`.
+On revisit: read `INSTRUCTIONS.md`, then `AGENTS.rep-edit.md`, then `.grok/skills/rep-edit/SKILL.md`. Pixel prompts stay in `prompts/imagine-shot-prompts.md` (version **2026-09-11-2k-texture**). Frosted / privacy glass stays as photographed. Never say “window pool.” Drive layout in `FOLDERS.md`. Gold look is Wanatah OUTBOX. Locked Sumava pack notes in `SNAPSHOT.md`.
 
 ## Client output (this job)
 
-Website download is **MLS Listing Photos only** — 50 stills, address-named, drop into:
-
-`DELIVERED CLIENT ASSETS (by Property)/11477 N 250 W, Sumava Resorts, IN 46379/Grok_2K/`
+Website ingest is **card drop + Drive INBOX/OUTBOX links**. No public Hermes zip.
+Delivered stills go to the listing folder under OUTBOX.

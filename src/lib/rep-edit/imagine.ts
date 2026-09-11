@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { authMiddleware } from "@/lib/auth/middleware";
 
 export const getImagineStatus = createServerFn({ method: "GET" }).handler(async () => {
   return { available: Boolean(process.env.XAI_API_KEY) };
@@ -9,7 +10,10 @@ type EditInput = {
   images: string[];
 };
 
+const ALLOWED_MODEL = "grok-imagine-image-2.0";
+
 export const runImagineEdit = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
   .validator((input: EditInput) => {
     if (!input || typeof input.prompt !== "string" || input.prompt.length < 8) {
       throw new Error("prompt required");
@@ -25,10 +29,11 @@ export const runImagineEdit = createServerFn({ method: "POST" })
       return { ok: false as const, error: "Imagine is not available in this environment" };
     }
     const body: Record<string, unknown> = {
-      model: "grok-imagine-image-2.0",
+      model: ALLOWED_MODEL,
       prompt: data.prompt,
       aspect_ratio: "3:2",
       resolution: "2k",
+      quality: "medium",
       response_format: "b64_json",
     };
     const refs = data.images.map((url) => ({ type: "image_url" as const, url }));

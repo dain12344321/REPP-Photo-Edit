@@ -3,9 +3,11 @@
 
 Offline except for the Imagine POST. Pair with rclone if you want Drive in/out:
 
-    rclone sync Drive:rep-edit-inbox ./inbox
+    rclone sync Drive:INBOX/{listing} ./inbox
     python scripts/watch_inbox.py ./inbox --out ./out --once
-    rclone copy ./out Drive:rep-edit-out
+    rclone copy ./out Drive:OUTBOX/{listing}
+
+Official folder IDs: FOLDERS.md (INBOX card dumps, OUTBOX delivered stills).
 
 Polls every --interval seconds. A job starts when JPEGs appear and settle
 (no size change for --settle seconds). Outputs are never overwritten.

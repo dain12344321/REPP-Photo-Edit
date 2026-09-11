@@ -4,14 +4,25 @@ import base64
 import json
 import os
 import ssl
+import tempfile
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 
-from rep_edit.constants import ASPECT_RATIO, EDIT_URL, MAX_INPUT_IMAGES, MODEL_DEFAULT, RESOLUTION
+from rep_edit.constants import (
+    ALLOWED_MODELS,
+    ASPECT_RATIO,
+    EDIT_URL,
+    MAX_INPUT_IMAGES,
+    MODEL_DEFAULT,
+    QUALITY,
+    RESOLUTION,
+)
+from rep_edit.prepare import prepare_for_imagine
 
 # Do not use the OpenAI SDK multipart images.edit() helper against api.x.ai.
+# Do not call grok-imagine-image (1.0) or any cheaper/smaller model for MLS stills.
 
 
 def edit(
@@ -23,6 +34,7 @@ def edit(
     model: str = MODEL_DEFAULT,
     aspect_ratio: str = ASPECT_RATIO,
     resolution: str = RESOLUTION,
+    quality: str = QUALITY,
     api_key: str | None = None,
     timeout: int = 180,
 ) -> Path:
@@ -33,6 +45,14 @@ def edit(
         raise ValueError(f"max {MAX_INPUT_IMAGES} input images, got {len(images)}")
     if out_path.exists():
         raise FileExistsError(f"refusing to clobber {out_path}")
+    if model not in ALLOWED_MODELS:
+        raise ValueError(
+            f"refusing model {model!r}; MLS stills must use grok-imagine-image-2.0"
+        )
+    if resolution != "2k":
+        raise ValueError(f"refusing resolution {resolution!r}; MLS stills must be 2k")
+    if quality != "medium":
+        raise ValueError(f"refusing quality {quality!r}; MLS stills must be medium")
     if dry_run:
         return out_path
 
@@ -45,9 +65,15 @@ def edit(
         "prompt": prompt,
         "aspect_ratio": aspect_ratio,
         "resolution": resolution,
+        "quality": quality,
         "response_format": "b64_json",
     }
-    encoded = [_data_url(p) for p in images]
+    with tempfile.TemporaryDirectory(prefix="rep-edit-2k-") as tmp:
+        prepared = [
+            prepare_for_imagine(src, Path(tmp) / f"{i:02d}.jpg")
+            for i, src in enumerate(images)
+        ]
+        encoded = [_data_url(p) for p in prepared]
     if len(encoded) == 1:
         body["image"] = {"url": encoded[0], "type": "image_url"}
     else:

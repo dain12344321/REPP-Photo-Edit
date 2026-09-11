@@ -14,6 +14,7 @@ import {
   overrideCondition,
   type Brief,
 } from "@/lib/rep-edit/classify";
+import { DRIVE_FOLDERS } from "@/lib/rep-edit/folders";
 import { browseDrive, type DriveEntry } from "@/lib/rep-edit/drive";
 import { PACK, buildPrompt } from "@/lib/rep-edit/prompts";
 import { editItem } from "@/lib/rep-edit/run-edit";
@@ -55,12 +56,13 @@ function IngestPage() {
   const [dragging, setDragging] = useState(false);
   const [running, setRunning] = useState<string | null>(null);
   const [ai, setAi] = useState<boolean | null>(null);
-  const [driveOpen, setDriveOpen] = useState(false);
+  const [driveOpen, setDriveOpen] = useState(true);
   const [driveQuery, setDriveQuery] = useState("");
-  const [driveFolder, setDriveFolder] = useState<string | undefined>(undefined);
+  const [driveFolder, setDriveFolder] = useState<string | undefined>(DRIVE_FOLDERS.inboxId);
   const [driveRows, setDriveRows] = useState<DriveEntry[]>([]);
   const [driveErr, setDriveErr] = useState<ReturnType<typeof classifyCallToolError>>(null);
   const [drivePending, setDrivePending] = useState(false);
+  const [driveLoginUrl, setDriveLoginUrl] = useState<string | null>(null);
 
   const brief: Brief = useMemo(() => ({ twilight_from_exteriors: twilight }), [twilight]);
 
@@ -174,14 +176,21 @@ function IngestPage() {
     if (!res.ok) {
       const classified = classifyCallToolError(res);
       setDriveErr(classified);
-      if (classified?.kind === "login") redirectToLoginIfRequired(res);
+      setDriveLoginUrl(res.loginUrl ?? null);
       setDrivePending(false);
       return;
     }
+    setDriveLoginUrl(null);
     setDriveFolder(folderId);
     setDriveRows(res.entries);
     setDrivePending(false);
   }
+
+  useEffect(() => {
+    void loadDrive(DRIVE_FOLDERS.inboxId);
+    // Official INBOX is the default Drive root for this console.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useRefetchWhenConnectorReady(driveErr?.kind === "pending", () => {
     void loadDrive(driveFolder, driveQuery || undefined);
@@ -191,17 +200,14 @@ function IngestPage() {
   const pending = working?.filter((i) => i.status === "pending").length ?? 0;
   const skipped = working?.filter((i) => i.status === "skipped").length ?? 0;
   const done = working?.filter((i) => i.status === "done").length ?? 0;
-  const hermesCmd = `python3 scripts/watch_inbox.py inbox --out jobs/listing --once`;
 
   return (
     <div className="space-y-8">
       <header className="rise max-w-2xl">
         <p className="eyebrow">Ingest</p>
-        <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">Card dump in. Stacks out.</h1>
+        <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">Ingest</h1>
         <p className="mt-3 text-muted">
-          3-EV interiors become middle / dark / bright from EXIF ExposureBias,
-          burst time, or luma. Dark frame is the window pull — only when a real
-          view is in that pane. Frosted glass stays frosted.
+          Sony JPEGs from the card, or open a listing in Drive. HDR stacks group from EXIF.
         </p>
       </header>
 
@@ -254,17 +260,61 @@ function IngestPage() {
 
       {driveOpen ? (
         <section className="rounded-md border border-line bg-paper p-5">
-          <h2 className="font-display text-2xl">Drive card dump</h2>
-          <p className="mt-2 text-sm text-muted">
-            Browse your Drive for a card folder. JPEGs cannot stream through the
-            gate — drop them here, or hand the folder to Hermes:
-          </p>
-          <pre className="mt-3 overflow-auto rounded-md bg-ink p-3 font-mono text-[12px] text-paper-2">{hermesCmd}</pre>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 className="font-display text-2xl">Official Drive</h2>
+              <p className="mt-2 text-sm text-muted">
+                INBOX is the card dump. OUTBOX is delivered stills. JPEGs do not
+                stream through the gate — drop them above, then write keepers to OUTBOX.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" variant="secondary" onClick={() => void loadDrive(DRIVE_FOLDERS.inboxId)}>
+                INBOX
+              </Button>
+              <Button size="sm" variant="secondary" onClick={() => void loadDrive(DRIVE_FOLDERS.outboxId)}>
+                OUTBOX
+              </Button>
+              <a
+                href={DRIVE_FOLDERS.inboxUrl}
+                className="inline-flex h-10 items-center rounded-full px-5 text-xs font-semibold tracking-wider text-steel uppercase"
+              >
+                Open INBOX
+              </a>
+              <a
+                href={DRIVE_FOLDERS.outboxUrl}
+                className="inline-flex h-10 items-center rounded-full px-5 text-xs font-semibold tracking-wider text-steel uppercase"
+              >
+                Open OUTBOX
+              </a>
+            </div>
+          </div>
+          {driveErr?.kind === "login" ? (
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <p className="text-sm text-warn">{driveErr.message}</p>
+              <Button
+                size="sm"
+                onClick={() =>
+                  redirectToLoginIfRequired({
+                    ok: false,
+                    data: null,
+                    loginRequired: true,
+                    loginUrl: driveLoginUrl ?? undefined,
+                  })
+                }
+                disabled={!driveLoginUrl}
+              >
+                Continue with Grok
+              </Button>
+            </div>
+          ) : driveErr ? (
+            <p className="mt-3 text-sm text-warn">{driveErr.message}</p>
+          ) : null}
           <div className="mt-4 flex flex-wrap gap-2">
             <input
               value={driveQuery}
               onChange={(e) => setDriveQuery(e.target.value)}
-              placeholder="Search folders — Sumava, card dump, Grok_2K"
+              placeholder="Search a listing — Wanatah, Flag Ct"
               className="h-11 min-w-0 flex-1 rounded-full border border-line px-4 text-sm"
             />
             <Button
@@ -273,18 +323,9 @@ function IngestPage() {
               onClick={() => void loadDrive(undefined, driveQuery || undefined)}
               disabled={drivePending}
             >
-              {drivePending ? "Connecting…" : "Search Drive"}
-            </Button>
-            <Button size="sm" variant="ghost" onClick={() => void loadDrive()}>
-              Root
+              {drivePending ? "Connecting…" : "Search"}
             </Button>
           </div>
-          {driveErr ? (
-            <p className="mt-3 text-sm text-warn">
-              {driveErr.message}
-              {driveErr.kind === "login" ? " Open from Grok so Drive can attach." : null}
-            </p>
-          ) : null}
           {driveRows.length ? (
             <ul className="mt-4 divide-y divide-line overflow-hidden rounded-md border border-line">
               {driveRows.map((row) => (
@@ -298,12 +339,21 @@ function IngestPage() {
                     >
                       Open
                     </button>
+                  ) : row.webViewLink ? (
+                    <a
+                      href={row.webViewLink}
+                      className="font-mono text-[11px] tracking-wide text-steel uppercase"
+                    >
+                      Drive
+                    </a>
                   ) : (
                     <span className="font-mono text-[11px] text-muted uppercase">{row.isJpeg ? "jpeg" : "file"}</span>
                   )}
                 </li>
               ))}
             </ul>
+          ) : drivePending ? (
+            <p className="mt-3 text-sm text-muted">Loading INBOX…</p>
           ) : null}
         </section>
       ) : null}

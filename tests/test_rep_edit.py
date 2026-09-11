@@ -28,6 +28,9 @@ class PromptPackTests(unittest.TestCase):
         self.assertNotIn("KEEP-CLAUSE", text)
         self.assertNotIn("Master Project Prompt", text)
         self.assertIn("Sony 3:2", text)
+        self.assertNotIn("window pool", text.lower())
+        self.assertIn("swimming pool", text.lower())
+        self.assertIn("carpet", text.lower())
 
     def test_hdr_names_middle_dark_bright(self):
         text = self.pack.for_condition("interior_hdr")
@@ -37,6 +40,8 @@ class PromptPackTests(unittest.TestCase):
         self.assertIn("Do not invent a view", text)
         self.assertIn("frosted", text.lower())
         self.assertIn("privacy", text.lower())
+        self.assertNotIn("window pool", text.lower())
+        self.assertIn("swimming pool", text.lower())
 
     def test_object_remove_requires_list(self):
         with self.assertRaises(ValueError):
@@ -53,6 +58,23 @@ class PromptPackTests(unittest.TestCase):
         text = self.pack.for_condition("virtual_twilight")
         self.assertIn("No purple sky", text)
         self.assertIn("No new windows or fixtures", text)
+
+    def test_pack_never_says_window_pool(self):
+        self.assertIn("2026-09-11-2k-texture", self.pack.version_line)
+        for condition in (
+            "interior_hdr",
+            "interior_single",
+            "exterior_single",
+            "virtual_twilight",
+            "drone",
+            "declutter",
+            "yard_cleanup",
+            "window_pull",
+        ):
+            text = self.pack.for_condition(condition).lower()
+            self.assertNotIn("window pool", text, condition)
+        text = self.pack.for_condition("object_remove", object_list=["hose"]).lower()
+        self.assertNotIn("window pool", text)
 
 
 class FixtureClassifyTests(unittest.TestCase):
@@ -133,6 +155,32 @@ class ProviderSignatureTests(unittest.TestCase):
         self.assertEqual(codex_edit.__name__, "edit")
         with self.assertRaises(NotImplementedError):
             codex_edit([], "x", Path("/tmp/nope.jpg"))
+
+    def test_grok_refuses_smaller_models(self):
+        from providers.grok import edit as grok_edit
+
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "in.jpg"
+            Image.new("RGB", (48, 32), (10, 10, 10)).save(src, "JPEG")
+            out = Path(tmp) / "out.jpg"
+            with self.assertRaises(ValueError):
+                grok_edit([src], "prompt", out, model="grok-imagine-image", dry_run=True)
+
+
+class PrepareTests(unittest.TestCase):
+    def test_downscales_long_edge_to_2k(self):
+        from rep_edit.prepare import output_is_2k, output_long_edge, prepare_for_imagine
+
+        with tempfile.TemporaryDirectory() as tmp:
+            src = Path(tmp) / "src.jpg"
+            dest = Path(tmp) / "out.jpg"
+            Image.new("RGB", (6000, 4000), (40, 80, 40)).save(src, "JPEG", quality=90)
+            prepare_for_imagine(src, dest)
+            self.assertEqual(output_long_edge(dest), 2048)
+            self.assertTrue(output_is_2k(dest))
+            with Image.open(dest) as im:
+                w, h = im.size
+            self.assertEqual(round(w / h, 2), round(3 / 2, 2))
 
 
 if __name__ == "__main__":

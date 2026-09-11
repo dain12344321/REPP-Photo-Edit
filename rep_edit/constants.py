@@ -31,12 +31,21 @@ VIRTUAL_SUFFIX = {
 }
 
 MODEL_DEFAULT = "grok-imagine-image-2.0"
+ALLOWED_MODELS = frozenset({"grok-imagine-image-2.0"})
 ASPECT_RATIO = "3:2"
 RESOLUTION = "2k"
+QUALITY = "medium"
 EDIT_URL = "https://api.x.ai/v1/images/edits"
 MAX_INPUT_IMAGES = 3
+PREFLIGHT_LONG_EDGE = 2048
+PREFLIGHT_JPEG_QUALITY = 95
+MIN_OUTPUT_LONG_EDGE = 1920
 
 JPEG_SUFFIXES = {".jpg", ".jpeg", ".jpe"}
+
+# Official Drive folders (Lakeshore INBOX / OUTBOX).
+DRIVE_INBOX_ID = "1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ"
+DRIVE_OUTBOX_ID = "1-W86toL_viRDEoyXX5JMR0ab68g2x62G"
 
 # Cluster frames shot within this many seconds as one bracket set.
 BRACKET_WINDOW_SECONDS = 12

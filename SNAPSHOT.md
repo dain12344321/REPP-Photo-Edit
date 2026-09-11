@@ -4,7 +4,7 @@ Sumava first production run. Outline/lot-box work is **removed**. Do not bring i
 
 ## What this is
 
-A local pipeline that ingests a Sony JPEG card (+ optional DJI dump), groups 3-EV HDR stacks, classifies each shot, and calls **Grok Imagine image edit** (not text-to-image) at 3:2 / 2K. Pixel prompts: `prompts/imagine-shot-prompts.md` version **2026-09-11-window-truth**. Outputs versioned MLS stills plus a sidecar JSON.
+A local pipeline that ingests a Sony JPEG card (+ optional DJI dump), groups 3-EV HDR stacks, classifies each shot, and calls **Grok Imagine image edit** (not text-to-image) at 3:2 / 2K **medium**. Pixel prompts: `prompts/imagine-shot-prompts.md` version **2026-09-11-2k-texture**. Outputs versioned MLS stills plus a sidecar JSON. Operator doctrine: `INSTRUCTIONS.md`.
 
 It is meant to run on a Mac Mini / PC, either:
 
@@ -23,6 +23,7 @@ This Build used the **xAI Images Edit API**, not Grok.com OAuth.
 | Body | JSON. Local files as `data:image/jpeg;base64,...` |
 | Max inputs | 3 images (HDR: middle, dark, bright) |
 | Aspect / res | `"3:2"` / `"2k"` |
+| Quality | `"medium"` (never omit, never `low`) |
 | Response | `response_format: "b64_json"` |
 
 Implementation: `providers/grok.py`. Do **not** use OpenAI multipart `images.edit()` against `api.x.ai`.
@@ -47,6 +48,7 @@ print(json.dumps({
   "prompt": open("prompts/imagine-shot-prompts.md").read().split("KEEP-CLAUSE")[0][-800:],
   "aspect_ratio": "3:2",
   "resolution": "2k",
+  "quality": "medium",
   "response_format": "b64_json",
   "image": {"url": "data:image/jpeg;base64," + base64.b64encode(p.read_bytes()).decode(), "type": "image_url"},
 }))
@@ -111,7 +113,12 @@ Removed on purpose: `scripts/overlay_lot.py`, still `049`, any parcel/lot-box ov
 
 ## Drive folders
 
-See [FOLDERS.md](FOLDERS.md). Input = card dump. Output = `Grok_2K` inside the client job `11477 N 250 W, Sumava Resorts, IN 46379`. Original `MLS Listing Photos/` stays read-only. Cuba Casa drops extras in `Grok_2K`.
+See [FOLDERS.md](FOLDERS.md). Official:
+
+- **INBOX** `1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ` — card dumps, one folder per listing.
+- **OUTBOX** `1-W86toL_viRDEoyXX5JMR0ab68g2x62G` — delivered 2K stills. Wanatah gold lives here.
+
+Input = card dump. Output = that listing’s OUTBOX folder. Do not overwrite an original MLS handoff.
 
 ## Locked pack (50 stills)
 
@@ -132,8 +139,12 @@ No `049`. No `51` / `052` filenames.
 
 - Middle frame is geometry on HDR. Attach order: middle, dark, bright.
 - Recover only real window views. Never invent scenery.
-- Frosted, privacy, reeded, or obscured glass stays as photographed. Do not clear it. Do not invent trees, water, or sky behind a bathroom window.
+- Frosted, privacy, reeded, or obscured glass stays as photographed. Do not clear it. Do not invent trees, water, sky, or a swimming pool behind a bathroom window.
+- Never say “window pool” in a prompt.
 - A dark or frosted pane is correct. An invented view is not.
+- Carpet weave and grass blades stay sharp. Fail smeared floors and painted lawns.
+- Output long edge must be ≥ 1920 px. Flag anything smaller.
+- Model is `grok-imagine-image-2.0` at quality medium. No smaller models.
 - Twilight is time-of-day only. No new windows, fixtures, landscaping, or purple skies.
 - Exterior set shares one daylight grade. Do not dusk a backyard.
 - Preserve Sony 3:2. Do not crop to 16:9 / 4:3 / square.

@@ -11,9 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IngestRouteImport } from './routes/ingest'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as PromptsRouteImport } from './routes/prompts'
 import { Route as QcRouteImport } from './routes/qc'
+import { Route as RunRouteImport } from './routes/run'
 import { Route as JobJobIdRouteImport } from './routes/job.$jobId'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const IngestRoute = IngestRouteImport.update({
   id: '/ingest',
   path: '/ingest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PromptsRoute = PromptsRouteImport.update({
@@ -35,48 +43,95 @@ const QcRoute = QcRouteImport.update({
   path: '/qc',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RunRoute = RunRouteImport.update({
+  id: '/run',
+  path: '/run',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JobJobIdRoute = JobJobIdRouteImport.update({
   id: '/job/$jobId',
   path: '/job/$jobId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ingest': typeof IngestRoute
+  '/login': typeof LoginRoute
   '/prompts': typeof PromptsRoute
   '/qc': typeof QcRoute
+  '/run': typeof RunRoute
   '/job/$jobId': typeof JobJobIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ingest': typeof IngestRoute
+  '/login': typeof LoginRoute
   '/prompts': typeof PromptsRoute
   '/qc': typeof QcRoute
+  '/run': typeof RunRoute
   '/job/$jobId': typeof JobJobIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ingest': typeof IngestRoute
+  '/login': typeof LoginRoute
   '/prompts': typeof PromptsRoute
   '/qc': typeof QcRoute
+  '/run': typeof RunRoute
   '/job/$jobId': typeof JobJobIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ingest' | '/prompts' | '/qc' | '/job/$jobId'
+  fullPaths:
+    | '/'
+    | '/ingest'
+    | '/login'
+    | '/prompts'
+    | '/qc'
+    | '/run'
+    | '/job/$jobId'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ingest' | '/prompts' | '/qc' | '/job/$jobId'
-  id: '__root__' | '/' | '/ingest' | '/prompts' | '/qc' | '/job/$jobId'
+  to:
+    | '/'
+    | '/ingest'
+    | '/login'
+    | '/prompts'
+    | '/qc'
+    | '/run'
+    | '/job/$jobId'
+    | '/api/auth/$'
+  id:
+    | '__root__'
+    | '/'
+    | '/ingest'
+    | '/login'
+    | '/prompts'
+    | '/qc'
+    | '/run'
+    | '/job/$jobId'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   IngestRoute: typeof IngestRoute
+  LoginRoute: typeof LoginRoute
   PromptsRoute: typeof PromptsRoute
   QcRoute: typeof QcRoute
+  RunRoute: typeof RunRoute
   JobJobIdRoute: typeof JobJobIdRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -95,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IngestRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/prompts': {
       id: '/prompts'
       path: '/prompts'
@@ -109,11 +171,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QcRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/run': {
+      id: '/run'
+      path: '/run'
+      fullPath: '/run'
+      preLoaderRoute: typeof RunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/job/$jobId': {
       id: '/job/$jobId'
       path: '/job/$jobId'
       fullPath: '/job/$jobId'
       preLoaderRoute: typeof JobJobIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -122,9 +198,12 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   IngestRoute: IngestRoute,
+  LoginRoute: LoginRoute,
   PromptsRoute: PromptsRoute,
   QcRoute: QcRoute,
+  RunRoute: RunRoute,
   JobJobIdRoute: JobJobIdRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

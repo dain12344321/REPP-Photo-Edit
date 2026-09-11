@@ -1,41 +1,41 @@
 # Drive folders — Lakeshore REP Edit
 
-Root for every client handoff:
+Official connections. Every listing uses these two roots.
 
-**[DELIVERED CLIENT ASSETS (by Property)](https://drive.google.com/drive/folders/1b2MWM0J9XfEOxpCl1He22t-qj0Dcb-_A)**
+| Role | Folder | ID |
+|---|---|---|
+| **INBOX** | [Card dumps](https://drive.google.com/drive/folders/1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ) | `1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ` |
+| **OUTBOX** | [Delivered client stills](https://drive.google.com/drive/folders/1-W86toL_viRDEoyXX5JMR0ab68g2x62G) | `1-W86toL_viRDEoyXX5JMR0ab68g2x62G` |
 
-One folder per listing, named like the others: `{Street, City, ST ZIP}`.
+One folder per listing, named `{Street, City, ST ZIP}`.
 
-## This listing
+## Live listings
 
-| | |
-|---|---|
-| Slug | `11477_N_250_W_Sumava_Resorts_IN_46379` |
-| Property | [11477 N 250 W, Sumava Resorts, IN 46379](https://drive.google.com/drive/folders/1f1fjqYf90fvSHttSihs6ByibUf3DzEcT) |
-| Input (card) | [SD card dump](https://drive.google.com/drive/folders/1G5xcyW85h6mbZ48IpEsc1KjN61kU_ffS) — Sony + `DJI Drone Card Dump/` |
-| Output | [Grok_2K](https://drive.google.com/drive/folders/1OH2U6-b-VCyxk60rI-xhUN0BULYFr7vW) inside that property folder |
-| Original MLS | `MLS Listing Photos/` — leave it. Do not overwrite. |
-| Floor plans | `2D Floor Plans (by unit)/` |
+| Listing | INBOX | OUTBOX |
+|---|---|---|
+| 1642 Flag Ct, Crown Point, IN 46307 | [card](https://drive.google.com/drive/folders/1cCkhmwbjaEx5E7MAlFKi5oeOZBo_HNq-) | [TEST RESULTS](https://drive.google.com/drive/folders/1NErlIfipK_xQf4aLN-uPRDSTajkUE687) |
+| 405 N Main St, Wanatah, IN 46390 | [card](https://drive.google.com/drive/folders/1V1so2_Xvn5CX2w3PLLGyY-YlcT3gF3i5) | [gold delivery](https://drive.google.com/drive/folders/1QRP9oHkTO7w9AZI6xCvvo0G_wueiI6KA) · [TEST RESULTS](https://drive.google.com/drive/folders/1ZLHr3r042GHv2emYRoVU_z515Ync49PE) |
 
-Cuba Casa drops extras in **Grok_2K**.
+Wanatah OUTBOX is the gold Imagine look (hand-finished). Match that grade at true 2K.
 
 ## Convention
 
 ```
-DELIVERED CLIENT ASSETS (by Property)/
-  11477 N 250 W, Sumava Resorts, IN 46379/
-    MLS Listing Photos/          original handoff (read-only)
-    2D Floor Plans (by unit)/
-    Grok_2K/                     pipeline export
-      {slug}_001_MLS.jpg
-      …
-      {slug}_048_MLS.jpg
-      {slug}_050_VT.jpg
-      {slug}_051_VT.jpg
+INBOX/
+  {Street, City, ST ZIP}/
+    _SA9*.JPG                 Sony card (read-only)
+    *.ARW                     ignore — JPEG stills only
+    DJI Drone Card Dump/      optional
+
+OUTBOX/
+  {Street, City, ST ZIP}/
+    {slug}_001_MLS.jpg
+    …
+    {slug}_0nn_VT.jpg
 ```
 
-**Input** stays a separate card dump (`_SA9*.JPG` + optional DJI folder). Watch with `scripts/watch_inbox.py`, push stills into that property’s `Grok_2K`.
+Stills: `{slug}_{nnn}_MLS.jpg`. Twilights: `{slug}_{nnn}_VT.jpg`. Never `51` / `052`. No lot outline. No music zip. No Hermes zip in the client folder.
 
-Stills: `{slug}_{nnn}_MLS.jpg`. Twilights: `{slug}_{nnn}_VT.jpg`. Never `51` / `052`. No lot outline.
+**Input** stays the INBOX card dump. Watch with `scripts/watch_inbox.py`, push keepers into that listing’s OUTBOX folder.
 
-**Download zip** (this preview): `{slug}.zip`.
+The website ingests a dropped card and links these two folders. It does not stream 12 MB JPEGs through the gate.
