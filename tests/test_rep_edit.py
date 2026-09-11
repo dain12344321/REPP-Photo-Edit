@@ -35,6 +35,8 @@ class PromptPackTests(unittest.TestCase):
         self.assertIn("Image 2 is the dark exposure", text)
         self.assertIn("Image 3 is the bright exposure", text)
         self.assertIn("Do not invent a view", text)
+        self.assertIn("frosted", text.lower())
+        self.assertIn("privacy", text.lower())
 
     def test_object_remove_requires_list(self):
         with self.assertRaises(ValueError):

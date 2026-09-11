@@ -4,7 +4,7 @@ Sumava first production run. Outline/lot-box work is **removed**. Do not bring i
 
 ## What this is
 
-A local pipeline that ingests a Sony JPEG card (+ optional DJI dump), groups 3-EV HDR stacks, classifies each shot, and calls **Grok Imagine image edit** (not text-to-image) at 3:2 / 2K. Outputs versioned MLS stills plus a sidecar JSON.
+A local pipeline that ingests a Sony JPEG card (+ optional DJI dump), groups 3-EV HDR stacks, classifies each shot, and calls **Grok Imagine image edit** (not text-to-image) at 3:2 / 2K. Pixel prompts: `prompts/imagine-shot-prompts.md` version **2026-09-11-window-truth**. Outputs versioned MLS stills plus a sidecar JSON.
 
 It is meant to run on a Mac Mini / PC, either:
 
@@ -131,7 +131,9 @@ No `049`. No `51` / `052` filenames.
 ## Hard rules (do not relax)
 
 - Middle frame is geometry on HDR. Attach order: middle, dark, bright.
-- Recover only real window views. Never invent scenery. Never leave glass black.
+- Recover only real window views. Never invent scenery.
+- Frosted, privacy, reeded, or obscured glass stays as photographed. Do not clear it. Do not invent trees, water, or sky behind a bathroom window.
+- A dark or frosted pane is correct. An invented view is not.
 - Twilight is time-of-day only. No new windows, fixtures, landscaping, or purple skies.
 - Exterior set shares one daylight grade. Do not dusk a backyard.
 - Preserve Sony 3:2. Do not crop to 16:9 / 4:3 / square.

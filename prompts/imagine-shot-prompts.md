@@ -1,5 +1,5 @@
 # Lakeshore Listing Media — Grok Imagine Prompt Pack
-Version: 2026-08-28-zillow
+Version: 2026-09-11-window-truth
 Target: grok-imagine-image-2.0
 Look: AutoHDR Classic / Lisa + Luminar Neo twilight — Zillow-hero punch, no window halo.
 Rule: change one family of things, then lock everything else.
@@ -17,6 +17,8 @@ Use 3:2. Do not set 16:9 / 4:3 / square unless the shot is already that.
 
 Keep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark. Preserve real house numbers and signage exactly. Do not overlay shot indexes or captions. Keep carpet weave and grass blade texture sharp, not smeared.
 
+Window truth: frosted, privacy, reeded, textured, filmed, stained, or obscured glass is architecture — keep the glass exactly as photographed. Do not make it clear. Do not invent trees, buildings, water, sky, people, or landscape behind it. Do not paint scenery outside the window opening; the wall around the frame stays the wall. Recover an exterior view only when the dark frame (or the single source) actually contains a readable view through that specific pane. If the pane is still opaque, frosted, or featureless in the dark frame, leave it. A dark or frosted pane is correct. An invented view is not.
+
 ---
 
 ## 1. Interior HDR — 3 brackets
@@ -25,12 +27,14 @@ Attach in this order: middle / dark / bright.
 Blend these three bracketed interiors into one natural MLS still.
 
 Image 1 is the middle exposure: use it for composition, geometry, furniture, color, and all property details.
-Image 2 is the dark exposure: use it only to recover windows, lamps, and clipped highlights.
+Image 2 is the dark exposure: use it only to recover windows, lamps, and clipped highlights — and only where those frames actually hold detail.
 Image 3 is the bright exposure: use it only to recover shadows and dark corners.
 
 Align the frames. Remove ghosting from curtains, fans, trees, and reflections.
 
-Lisa window pull (AutoHDR Lisa): recover only the real exterior view in the dark frame. Do not invent a view. The outdoor view is a dark, deep, rich window pool — 1 to 1.5 stops darker than the room, contrasty, saturated greens and sky, not blown, not faded, not a pasted postcard, not matched in brightness to the interior. Keep frames, mullions, blinds, sheers, and glass. No halo, no glow ring, no milky fringe. Hard edge on the frame. Interior stays bright and open.
+Lisa window pull (AutoHDR Lisa), only on panes that already show a real exterior in the dark frame: the outdoor view is a dark, deep, rich window pool — 1 to 1.5 stops darker than the room, contrasty, saturated greens and sky, not blown, not faded, not a pasted postcard, not matched in brightness to the interior. Keep frames, mullions, blinds, sheers, and glass. No halo, no glow ring, no milky fringe. Hard edge on the frame. Interior stays bright and open.
+
+Bathroom, powder, and privacy glass: if a pane is frosted, textured, rain-glass, or blocked, keep that glass. Do not clear it. Do not invent a view. Do not invent a yard, trees, or water behind a bathroom window. Do not add muntins, grids, or views that are not in the source.
 
 If walls are white, keep them bright white. If they are yellow or cream, keep that color — even the light, do not force every room to the same white.
 
@@ -45,10 +49,11 @@ Attach the one interior JPEG.
 
 Edit this interior into a clean MLS still. Flambient: even, bright, open room with real shadows and depth. Neutral whites when the walls are white. If the room is yellow or warm, keep that cast — even it, do not bleach it. Real wood, accurate flooring. Keep carpet pile and fabric texture sharp — not plastic, not smeared.
 
-Recover window detail only if it exists. Do not invent an exterior view. If a view is present, make it an AutoHDR Lisa window pool: dark, deep, rich, contrasty — 1 to 1.5 stops darker than the room. Saturated outdoor color. Interior bright.
+Recover window detail only if it exists in this frame. Do not invent an exterior view. If a real view is already visible through that pane, make it an AutoHDR Lisa window pool: dark, deep, rich, contrasty — 1 to 1.5 stops darker than the room. Saturated outdoor color. Interior bright.
 
-If glass is black or empty, recover the real exterior view from the dark frame. Never leave a window as a black rectangle.
-Keep muntins, glazing bars, grilles, and blinds intact, evenly lit, and continuous — no dark blobs, no missing bars, no melted grid. Hard frames. No halo, no glow ring, no milky fringe.
+If a pane is frosted, privacy, textured, or black with no readable exterior in this frame, keep the glass as photographed. Do not clear frosted bathroom glass. Do not invent trees, buildings, or sky behind it. Do not paint scenery past the window frame.
+
+Keep muntins, glazing bars, grilles, blinds, frosting, and film intact, evenly lit, and continuous — no dark blobs, no missing bars, no melted grid. Hard frames. No halo, no glow ring, no milky fringe.
 
 Straighten verticals without stretching the room.
 
@@ -134,9 +139,10 @@ KEEP-CLAUSE
 ## 9. Window pull (2 frames)
 Attach: finished or middle interior, then the dark bracket.
 
-Lisa window pull. Use image 1 as the interior. Pull only the real exterior view from image 2 into the existing window openings.
+Lisa window pull. Use image 1 as the interior. Pull a view from image 2 only into panes where image 2 actually shows a readable exterior through that opening.
 The view is a dark, deep, rich window pool — 1 to 1.5 stops darker than the room, contrasty, not blown, not faded, not a postcard, not as bright as the interior.
-Keep frames, muntins, glazing bars, grilles, blinds, sheers, and glass reflections. Bars stay even and continuous — no dark blobs, no missing bars, no melted grid. No halo, no glow ring, no milky fringe, no cutout. Hard edge on the frame. Interior stays bright.
+If a pane in image 2 is frosted, privacy, textured, or still empty, keep that glass from image 1. Do not clear it. Do not invent a view. Do not paint scenery outside the frame.
+Keep frames, muntins, glazing bars, grilles, blinds, sheers, frosting, and glass reflections. Bars stay even and continuous — no dark blobs, no missing bars, no melted grid. No halo, no glow ring, no milky fringe, no cutout. Hard edge on the frame. Interior stays bright.
 
 KEEP-CLAUSE
 
@@ -155,4 +161,4 @@ KEEP-CLAUSE
 2. Paste shot prompt + keep-clause only. No master doc.
 3. Quality mode. Aspect auto or 3:2.
 4. One retry max. If architecture drifts, shorten the change clause, do not add more policy.
-5. Score: geometry lock, window truth, sky/twilight believability, deliverable yes/no.
+5. Score: geometry lock, window truth (frosted stays frosted), sky/twilight believability, deliverable yes/no.

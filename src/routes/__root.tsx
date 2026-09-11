@@ -6,7 +6,6 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "Lakeshore Listing Media · REP Edit";
 
-/** Same public-host guard the PWA injector uses for og:image. */
 function publicShareHost(): string {
   const raw = String(import.meta.env.VITE_PUBLIC_HOSTNAME ?? "")
     .split(",")[0]
@@ -37,12 +36,10 @@ export const Route = createRootRoute({
         {
           name: "description",
           content:
-            "MLS stills pipeline for Lakeshore Listing Media. Ingest Sony JPEGs, group HDR stacks, freeze Imagine prompts.",
+            "MLS stills pipeline for Lakeshore Listing Media. Sony cards in, Grok Imagine image-edit, 3:2 2K stills out. Window-truth locked.",
         },
         { name: "theme-color", content: "#000000" },
-        ...(xBanner
-          ? [{ property: "x:game:image", content: xBanner }]
-          : []),
+        ...(xBanner ? [{ property: "x:game:image", content: xBanner }] : []),
       ],
       links: [
         { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },

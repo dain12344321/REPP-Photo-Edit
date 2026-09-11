@@ -36,7 +36,7 @@ CNAME `edit.lakeshorelisting.media` at a named tunnel if you want it on the doma
 
 ## Grokbot
 
-On revisit: read `AGENTS.rep-edit.md` then `.grok/skills/rep-edit/SKILL.md`. Pixel prompts stay in `prompts/imagine-shot-prompts.md`. Drive layout in `FOLDERS.md`. Locked Sumava pack notes in `SNAPSHOT.md`.
+On revisit: read `AGENTS.rep-edit.md` then `.grok/skills/rep-edit/SKILL.md`. Pixel prompts stay in `prompts/imagine-shot-prompts.md` (version **2026-09-11-window-truth**). Frosted / privacy glass stays as photographed. Drive layout in `FOLDERS.md`. Locked Sumava pack notes in `SNAPSHOT.md`.
 
 ## Client output (this job)
 

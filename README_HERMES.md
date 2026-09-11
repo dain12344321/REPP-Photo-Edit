@@ -2,6 +2,8 @@
 
 Full snapshot: **[SNAPSHOT.md](SNAPSHOT.md)**. Grokbot handover: **[GROKBOT.md](GROKBOT.md)**. Skill: **`.grok/skills/rep-edit/SKILL.md`**.
 
+Prompt pack version: **2026-09-11-window-truth**. Frosted bathroom glass stays frosted. Do not invent a view.
+
 ## Quick start (Mac Mini / PC)
 
 ```bash
@@ -24,7 +26,7 @@ cloudflared tunnel --url http://127.0.0.1:8080
 
 ## Drive
 
-Input = card dump. Output = `DELIVERED CLIENT ASSETS (by Property)/{address}/Grok_2K/`. See `FOLDERS.md`.
+Input = card dump. Output = `DELIVERED CLIENT ASSETS (by Property)/{address}/Grok_2K/`. See `FOLDERS.md`. Pair with rclone + `scripts/watch_inbox.py`.
 
 ## Out of scope
 

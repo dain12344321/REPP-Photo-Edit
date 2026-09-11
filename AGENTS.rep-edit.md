@@ -11,6 +11,7 @@ On Grokbot / Grok Build / Hermes: read `.grok/skills/rep-edit/SKILL.md` then thi
 - Group brackets before classifying.
 - Version outputs: `*_v001.jpg`, never clobber.
 - Prefer skip + flag over a guessed window view.
+- Frosted / privacy glass is architecture. Do not clear it. Do not invent a view through it.
 - Write finals into `Grok_2K` under **DELIVERED CLIENT ASSETS (by Property)**.
 
 ## Do not

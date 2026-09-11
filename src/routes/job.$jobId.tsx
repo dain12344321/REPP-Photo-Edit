@@ -3,16 +3,22 @@ import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getJob, JOBS } from "@/lib/rep-edit/jobs";
+import { getImagineStatus } from "@/lib/rep-edit/imagine";
+import { editItem } from "@/lib/rep-edit/run-edit";
+import { useJobStore } from "@/lib/rep-edit/store";
 import { CONDITION_LABEL, CONDITION_TONE, type JobItem } from "@/lib/rep-edit/types";
-import { getImagineStatus, runImagineEdit } from "@/lib/rep-edit/imagine";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/job/$jobId")({ component: JobPage });
 
 function JobPage() {
   const { jobId } = Route.useParams();
-  const job = getJob(jobId);
-  const [open, setOpen] = useState<string | null>(job.items.find((i) => i.status === "done")?.id ?? job.items[0]?.id ?? null);
+  const live = useJobStore((s) => s.live);
+  const patchItem = useJobStore((s) => s.patchItem);
+  const job = jobId === "live" && live ? live : getJob(jobId);
+  const [open, setOpen] = useState<string | null>(
+    job.items.find((i) => i.status === "done")?.id ?? job.items[0]?.id ?? null,
+  );
   const [ai, setAi] = useState<boolean | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [result, setResult] = useState<Record<string, string>>({});
@@ -30,18 +36,7 @@ function JobPage() {
     return c;
   }, [job.items]);
 
-  const live = job.items.some((i) => i.status === "done" && !i.dry_run);
-
-  async function toDataUrl(url: string): Promise<string> {
-    const res = await fetch(url);
-    const blob = await res.blob();
-    return await new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(String(reader.result));
-      reader.onerror = () => reject(reader.error);
-      reader.readAsDataURL(blob);
-    });
-  }
+  const liveFlag = job.items.some((i) => i.status === "done" && !i.dry_run) || jobId === "live";
 
   async function runLive(item: JobItem) {
     if (!item.prompt) return;
@@ -49,17 +44,13 @@ function JobPage() {
     setBusy(item.id);
     setError((e) => ({ ...e, [item.id]: "" }));
     try {
-      const order =
-        item.condition === "interior_hdr"
-          ? (["middle", "dark", "bright"] as const)
-          : item.condition === "window_pull"
-            ? (["middle", "dark"] as const)
-            : (["single", "middle", "dark", "bright"] as const);
-      const urls = order.map((k) => item.inputs[k]).filter((u): u is string => Boolean(u));
-      const images = await Promise.all(urls.map(toDataUrl));
-      const out = await runImagineEdit({ data: { prompt: item.prompt, images } });
-      if (out.ok) setResult((r) => ({ ...r, [item.id]: out.image }));
-      else setError((e) => ({ ...e, [item.id]: out.error }));
+      const out = await editItem(item);
+      if (out.ok) {
+        setResult((r) => ({ ...r, [item.id]: out.image }));
+        if (jobId === "live") patchItem(item.id, { result: out.image, status: "done" });
+      } else {
+        setError((e) => ({ ...e, [item.id]: out.error }));
+      }
     } catch (err) {
       setError((e) => ({ ...e, [item.id]: err instanceof Error ? err.message : "edit failed" }));
     } finally {
@@ -67,13 +58,15 @@ function JobPage() {
     }
   }
 
+  const jobKeys = jobId === "live" ? ["live", ...Object.keys(JOBS)] : ["live", ...Object.keys(JOBS)];
+
   return (
     <div className="space-y-8">
       <header className="rise">
         <p className="eyebrow">Job / {job.job_id}</p>
         <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
           <h1 className="font-display text-4xl tracking-[-0.03em]">
-            {live ? "Live gallery" : "Sample job"}
+            {liveFlag ? "Live gallery" : "Sample job"}
           </h1>
           <div className="flex flex-wrap gap-2">
             {Object.entries(counts).map(([k, n]) => (
@@ -84,13 +77,12 @@ function JobPage() {
           </div>
         </div>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          {live
-            ? "2K edits on grok-imagine-image-2.0."
-            : "Dry-run plan only — conditions, prompts, and MLS names. Drop a card on Ingest to classify a real shoot."}
+          {liveFlag
+            ? "2K edits on grok-imagine-image-2.0. Window-truth pack 2026-09-11."
+            : "Dry-run plan — conditions, prompts, and MLS names. Drop a card on Ingest to classify a real shoot."}
         </p>
-        {Object.keys(JOBS).length > 1 ? (
         <div className="mt-4 flex flex-wrap gap-2">
-          {Object.keys(JOBS).map((id) => (
+          {jobKeys.map((id) => (
             <Link
               key={id}
               to="/job/$jobId"
@@ -104,7 +96,6 @@ function JobPage() {
             </Link>
           ))}
         </div>
-        ) : null}
       </header>
 
       <ol className="rise-2 space-y-3">
@@ -115,16 +106,12 @@ function JobPage() {
             item.inputs.bright && { label: "bright", src: item.inputs.bright },
             item.inputs.single && { label: "single", src: item.inputs.single },
           ].filter((t): t is { label: string; src: string } =>
-            Boolean(t && (t.src.startsWith("/") || t.src.startsWith("http") || t.src.startsWith("data:"))),
+            Boolean(t && (t.src.startsWith("/") || t.src.startsWith("http") || t.src.startsWith("data:") || t.src.startsWith("blob:"))),
           );
           const expanded = open === item.id;
           const edited = result[item.id] || item.result;
           return (
-            <li
-              id={item.id}
-              key={item.id}
-              className="overflow-hidden rounded-md border border-line bg-paper"
-            >
+            <li id={item.id} key={item.id} className="overflow-hidden rounded-md border border-line bg-paper">
               <button
                 type="button"
                 onClick={() => setOpen(expanded ? null : item.id)}
@@ -154,21 +141,13 @@ function JobPage() {
                   {edited ? (
                     <div className="grid gap-3 sm:grid-cols-2">
                       <figure>
-                        <img
-                          src={thumbs[0]?.src}
-                          alt="Source"
-                          className="frame-3x2 w-full rounded-sm object-cover"
-                        />
+                        <img src={thumbs[0]?.src} alt="Source" className="frame-3x2 w-full rounded-sm object-cover" />
                         <figcaption className="mt-1 font-mono text-[11px] text-muted uppercase">
                           Source {thumbs[0]?.label}
                         </figcaption>
                       </figure>
                       <figure>
-                        <img
-                          src={edited}
-                          alt={`Edited ${item.id}`}
-                          className="frame-3x2 w-full rounded-sm object-cover"
-                        />
+                        <img src={edited} alt={`Edited ${item.id}`} className="frame-3x2 w-full rounded-sm object-cover" />
                         <figcaption className="mt-1 font-mono text-[11px] text-muted uppercase">
                           Imagine 2K · 3:2
                         </figcaption>
@@ -178,14 +157,8 @@ function JobPage() {
                   <div className={cn("grid gap-2", thumbs.length > 1 ? "mt-4 grid-cols-3" : edited ? "mt-4 max-w-md" : "max-w-md")}>
                     {thumbs.map((t) => (
                       <figure key={t.label} className="min-w-0">
-                        <img
-                          src={t.src}
-                          alt={t.label}
-                          className="frame-3x2 w-full rounded-sm object-cover"
-                        />
-                        <figcaption className="mt-1 font-mono text-[11px] text-muted uppercase">
-                          {t.label}
-                        </figcaption>
+                        <img src={t.src} alt={t.label} className="frame-3x2 w-full rounded-sm object-cover" />
+                        <figcaption className="mt-1 font-mono text-[11px] text-muted uppercase">{t.label}</figcaption>
                       </figure>
                     ))}
                   </div>
@@ -194,7 +167,6 @@ function JobPage() {
                     <>
                       <p className="mt-4 font-mono text-[11px] tracking-wide text-muted uppercase">
                         Prompt {item.prompt_id}
-                        {item.prompt_sha256 ? ` · ${item.prompt_sha256.slice(0, 12)}` : ""}
                         {item.output_name ? ` · ${item.output_name}` : ""}
                       </p>
                       <pre className="mt-2 max-h-72 overflow-auto rounded-md bg-ink p-4 font-mono text-[12px] leading-relaxed whitespace-pre-wrap text-paper-2">
@@ -203,11 +175,7 @@ function JobPage() {
                     </>
                   ) : null}
                   <div className="mt-4 flex flex-wrap items-center gap-3">
-                    <Button
-                      size="sm"
-                      disabled={!ai || busy === item.id || !item.prompt}
-                      onClick={() => void runLive(item)}
-                    >
+                    <Button size="sm" disabled={!ai || busy === item.id || !item.prompt} onClick={() => void runLive(item)}>
                       {busy === item.id ? "Editing…" : edited ? "Re-run live edit" : "Run one live edit"}
                     </Button>
                     {ai === false ? (

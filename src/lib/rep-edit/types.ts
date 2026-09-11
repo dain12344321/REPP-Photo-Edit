@@ -17,6 +17,7 @@ export type JobItem = {
   id: string;
   condition: Condition;
   inputs: Partial<Record<"middle" | "dark" | "bright" | "single", string>>;
+  input_names?: Partial<Record<"middle" | "dark" | "bright" | "single", string>>;
   prompt_id: string;
   status: "pending" | "done" | "skipped" | "error";
   flag?: string;

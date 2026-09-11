@@ -7,6 +7,7 @@ const NAV = [
   { to: "/job/$jobId", label: "Job" },
   { to: "/prompts", label: "Prompts" },
   { to: "/qc", label: "QC" },
+  { to: "/run", label: "Run" },
 ] as const;
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -17,11 +18,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="bg-header text-paper">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <img
-              src="/brand/wordmark.png"
-              alt="Lakeshore Listing Media"
-              className="h-10 w-auto sm:h-12"
-            />
+            <span className="font-display text-[15px] font-bold tracking-tight text-paper sm:text-lg">
+              Lakeshore Listing Media
+            </span>
             <span className="hidden h-8 w-px bg-paper/20 sm:block" />
             <span className="hidden font-mono text-[11px] tracking-[0.18em] text-paper/70 uppercase sm:inline">
               REP Edit
@@ -57,7 +56,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <footer className="bg-header text-paper/70">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-3 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p className="font-mono text-[11px] tracking-[0.14em] uppercase">
-            Lakeshore Listing Media · grok-imagine-image-2.0 · Sony 3:2
+            Lakeshore Listing Media · grok-imagine-image-2.0 · Sony 3:2 · window-truth
           </p>
           <a
             href="https://lakeshorelisting.media"

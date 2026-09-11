@@ -1,9 +1,12 @@
 # Lakeshore REP Edit
 
 Local stills pipeline for Lakeshore Listing Media. Pixel prompts are frozen in
-`prompts/imagine-shot-prompts.md`. The console inspects ingest, classification,
-and image edits. Photo-to-video, parcel outlines, and gallery-wide generative
-matching are out of scope.
+`prompts/imagine-shot-prompts.md` (version **2026-09-11-window-truth**).
+The console classifies a card dump and runs Grok Imagine image-edit. Photo-to-video,
+parcel outlines, and gallery-wide generative matching are out of scope.
+
+**Window truth:** recover a view only when the dark frame actually contains one.
+Frosted bathroom glass stays frosted. Do not invent scenery outside the pane.
 
 ## Frozen files
 
