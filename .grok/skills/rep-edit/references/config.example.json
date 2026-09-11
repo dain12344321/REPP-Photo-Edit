@@ -1,0 +1,14 @@
+{
+  "provider": "grok",
+  "model": "grok-imagine-image-2.0",
+  "aspect_ratio": "3:2",
+  "resolution": "2k",
+  "inbox": "inbox",
+  "out": "jobs/listing",
+  "twilight_from_exteriors": true,
+  "drive": {
+    "root": "DELIVERED CLIENT ASSETS (by Property)",
+    "output_folder": "Grok_2K",
+    "mls_handoff": "MLS Listing Photos"
+  }
+}
