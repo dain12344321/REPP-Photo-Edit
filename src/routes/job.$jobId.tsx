@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getJob, JOBS } from "@/lib/rep-edit/jobs";
+import { RedirectToSignIn, SignInGate } from "@/lib/auth/gates";
+import { getJob } from "@/lib/rep-edit/jobs";
 import { getImagineStatus } from "@/lib/rep-edit/imagine";
 import { editItem } from "@/lib/rep-edit/run-edit";
 import { useJobStore } from "@/lib/rep-edit/store";
@@ -12,6 +13,14 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/job/$jobId")({ component: JobPage });
 
 function JobPage() {
+  return (
+    <SignInGate fallback={<RedirectToSignIn />}>
+      <JobDesk />
+    </SignInGate>
+  );
+}
+
+function JobDesk() {
   const { jobId } = Route.useParams();
   const live = useJobStore((s) => s.live);
   const patchItem = useJobStore((s) => s.patchItem);
@@ -36,8 +45,6 @@ function JobPage() {
     return c;
   }, [job.items]);
 
-  const liveFlag = job.items.some((i) => i.status === "done" && !i.dry_run) || jobId === "live";
-
   async function runLive(item: JobItem) {
     if (!item.prompt) return;
     if (!window.confirm("This spends Imagine credits on one 2K edit. Continue?")) return;
@@ -58,16 +65,34 @@ function JobPage() {
     }
   }
 
-  const jobKeys = jobId === "live" ? ["live", ...Object.keys(JOBS)] : ["live", ...Object.keys(JOBS)];
+  if (!job.items.length) {
+    return (
+      <div className="space-y-10">
+        <header>
+          <p className="eyebrow">Job</p>
+          <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">Job</h1>
+          <p className="mt-3 max-w-xl text-muted">Empty until you ingest a card.</p>
+        </header>
+        <div className="rounded-md border border-dashed border-line px-6 py-16 text-center">
+          <p className="font-display text-xl text-ink">No stills yet</p>
+          <p className="mt-2 text-sm text-muted">Drop Sony JPEGs on Ingest. The plan populates here.</p>
+          <Link
+            to="/ingest"
+            className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-cta px-8 text-sm font-semibold tracking-wider text-paper uppercase hover:bg-cta-hover"
+          >
+            Ingest a card
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
       <header className="rise">
         <p className="eyebrow">Job / {job.job_id}</p>
         <div className="mt-2 flex flex-wrap items-end justify-between gap-4">
-          <h1 className="font-display text-4xl tracking-[-0.03em]">
-            {liveFlag ? "Live gallery" : "Sample job"}
-          </h1>
+          <h1 className="font-display text-4xl tracking-[-0.03em]">Live job</h1>
           <div className="flex flex-wrap gap-2">
             {Object.entries(counts).map(([k, n]) => (
               <Badge key={k} tone="paper">
@@ -77,25 +102,8 @@ function JobPage() {
           </div>
         </div>
         <p className="mt-3 max-w-2xl text-ink-soft">
-          {liveFlag
-            ? "2K edits on grok-imagine-image-2.0. Window-truth pack 2026-09-11."
-            : "Dry-run plan — conditions, prompts, and MLS names. Drop a card on Ingest to classify a real shoot."}
+          2K edits on grok-imagine-image-2.0. One shot at a time.
         </p>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {jobKeys.map((id) => (
-            <Link
-              key={id}
-              to="/job/$jobId"
-              params={{ jobId: id }}
-              className={cn(
-                "rounded-full px-3 py-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase",
-                id === job.job_id ? "bg-ink text-paper" : "border border-line bg-paper text-muted",
-              )}
-            >
-              {id}
-            </Link>
-          ))}
-        </div>
       </header>
 
       <ol className="rise-2 space-y-3">

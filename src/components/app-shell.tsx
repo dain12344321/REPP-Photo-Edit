@@ -63,7 +63,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.to}
                     to={item.to}
-                    params={item.to === "/job/$jobId" ? { jobId: "demo" } : undefined}
+                    params={item.to === "/job/$jobId" ? { jobId: "live" } : undefined}
                     className={cn(
                       "rounded-full px-4 py-2 text-xs font-medium tracking-[0.12em] uppercase transition-colors duration-200",
                       active ? "bg-paper text-ink" : "text-paper/75 hover:text-paper",

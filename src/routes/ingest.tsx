@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { FolderOpen, Upload } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +8,7 @@ import {
   redirectToLoginIfRequired,
   useRefetchWhenConnectorReady,
 } from "@/lib/app-data";
+import { RedirectToSignIn, SignInGate } from "@/lib/auth/gates";
 import {
   classifyFrames,
   framesFromFiles,
@@ -44,7 +45,14 @@ function withPrompts(items: JobItem[]): JobItem[] {
 }
 
 function IngestPage() {
-  const navigate = useNavigate();
+  return (
+    <SignInGate fallback={<RedirectToSignIn />}>
+      <IngestDesk />
+    </SignInGate>
+  );
+}
+
+function IngestDesk() {
   const setLive = useJobStore((s) => s.setLive);
   const patchItem = useJobStore((s) => s.patchItem);
   const live = useJobStore((s) => s.live);
@@ -101,33 +109,6 @@ function IngestPage() {
       );
     } catch (err) {
       setError(err instanceof Error ? err.message : "ingest failed");
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function loadSample() {
-    setBusy(true);
-    setError(null);
-    try {
-      const names = [
-        "DSC00001_INT_A_m.jpg",
-        "DSC00002_INT_A_d.jpg",
-        "DSC00003_INT_A_b.jpg",
-        "DSC00004_INT_B_m.jpg",
-        "DSC00005_INT_B_d.jpg",
-        "DSC00006_INT_B_b.jpg",
-        "DSC00007_EXT_A.jpg",
-        "DSC00008_EXT_B.jpg",
-        "DSC00009_DRONE_A.jpg",
-      ];
-      const files: File[] = [];
-      for (const name of names) {
-        const res = await fetch(`/fixtures/${name}`);
-        const blob = await res.blob();
-        files.push(new File([blob], name, { type: "image/jpeg" }));
-      }
-      await onFiles(files);
     } finally {
       setBusy(false);
     }
@@ -221,9 +202,6 @@ function IngestPage() {
           />
           Twilight candidates from exteriors
         </label>
-        <Button variant="secondary" size="sm" onClick={() => void loadSample()} disabled={busy}>
-          Load 9-JPEG sample
-        </Button>
         <Button variant="ghost" size="sm" onClick={() => setDriveOpen((v) => !v)}>
           <FolderOpen className="size-4" />
           Google Drive
@@ -314,7 +292,7 @@ function IngestPage() {
             <input
               value={driveQuery}
               onChange={(e) => setDriveQuery(e.target.value)}
-              placeholder="Search a listing — Wanatah, Flag Ct"
+              placeholder="Search a listing"
               className="h-11 min-w-0 flex-1 rounded-full border border-line px-4 text-sm"
             />
             <Button
@@ -447,17 +425,6 @@ function IngestPage() {
               Edits are user-initiated. 2K · 3:2 · grok-imagine-image-2.0 · one shot at a time.
             </p>
           )}
-          <p className="text-sm text-muted">
-            Inspect the sample plan on the{" "}
-            <button
-              type="button"
-              className="text-steel underline-offset-4 hover:underline"
-              onClick={() => navigate({ to: "/job/$jobId", params: { jobId: "demo" } })}
-            >
-              demo job
-            </button>
-            .
-          </p>
         </section>
       ) : null}
     </div>

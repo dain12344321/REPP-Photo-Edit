@@ -1,56 +1,33 @@
 # Lakeshore REP Edit
 
-Sony card in. 2K MLS stills out. This repo is the product.
+Standalone listing-stills app. Sign in with X. Drop a Sony card. Imagine at 2K. Deliver to Drive.
 
-**Clone it:** [github.com/dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
+**Download:** [Zip of main](https://github.com/dain12344321/REPP-Photo-Edit/archive/refs/heads/main.zip) · **Repo:** [dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
+
+The shipped photo is the lakeshorelisting.media hero. Gallery, jobs, and OUTBOX start empty and fill from ingest.
+
+## Run locally
+
+You need Node 22, Python 3.10+, and an xAI key from [console.x.ai](https://console.x.ai) on the same X account that pays for Imagine.
 
 ```bash
-git clone https://github.com/dain12344321/REPP-Photo-Edit.git
-cd REPP-Photo-Edit
+unzip REPP-Photo-Edit-main.zip
+cd REPP-Photo-Edit-main
+python3 -m pip install -r requirements.txt
+npm install
+export XAI_API_KEY=xai-...
+npm run dev
 ```
 
-Two runtimes, same prompt pack (`prompts/imagine-shot-prompts.md`) and same model (`grok-imagine-image-2.0`, quality medium, 2K).
+Sign in with X in the console. Ingest a card. Run one 2K edit at a time.
 
-## 1. Local / Hermes (Python)
-
-For a Mac Mini, a Hermes agent, or a headless watcher.
+Headless (Hermes / Mac Mini) — no browser, same X account key:
 
 ```bash
-python3 -m pip install -r requirements.txt
-export XAI_API_KEY=xai-...          # console.x.ai API key
+export XAI_API_KEY=xai-...
 python3 scripts/ingest.py inbox --job-id listing --out jobs/listing/job.json
 python3 scripts/run_job.py jobs/listing/job.json
 ```
-
-Dry run (no API):
-
-```bash
-python3 scripts/make_dry_run_fixture.py fixtures/dry-run-9jpeg
-python3 scripts/ingest.py fixtures/dry-run-9jpeg --job-id dry-run --out jobs/dry-run/job.json
-python3 scripts/run_job.py jobs/dry-run/job.json --dry-run
-```
-
-Operator rules: [INSTRUCTIONS.md](INSTRUCTIONS.md). Drive IDs: [FOLDERS.md](FOLDERS.md). Hermes notes: [README_HERMES.md](README_HERMES.md).
-
-## 2. Hosted web console
-
-The Grok Build app is the hosted console — ingest a card, sign in, talk to Drive.
-
-To host it yourself (Node 22):
-
-```bash
-npm install
-export XAI_API_KEY=xai-...
-npm run dev -- --host 0.0.0.0 --port 8080
-```
-
-Point a Cloudflare tunnel at it if you want a public URL on your domain:
-
-```bash
-cloudflared tunnel --url http://127.0.0.1:8080
-```
-
-Production build of this stack deploys as a TanStack Start / Vercel app (`npm run build`). A native Cloudflare Workers rewrite is not in this repo.
 
 ## Drive
 
@@ -59,14 +36,15 @@ Production build of this stack deploys as a TanStack Start / Vercel app (`npm ru
 | INBOX | [Card dumps](https://drive.google.com/drive/folders/1LidXBZXZW_m5c_J1xXjdHnjnwvgat8lZ) |
 | OUTBOX | [Delivered stills](https://drive.google.com/drive/folders/1-W86toL_viRDEoyXX5JMR0ab68g2x62G) |
 
-One folder per listing. INBOX is read-only source. OUTBOX is the only write target.
+Rules: [INSTRUCTIONS.md](INSTRUCTIONS.md). Folders: [FOLDERS.md](FOLDERS.md). Hermes: [README_HERMES.md](README_HERMES.md).
 
-## Layout
+## What this is
 
 | Path | Role |
 |---|---|
+| `src/` | Web console (ingest, job, Drive, gallery) |
 | `prompts/imagine-shot-prompts.md` | Frozen Imagine pack |
-| `INSTRUCTIONS.md` | Operator instruction set |
-| `rep_edit/` + `scripts/` | Python ingest / edit / watcher |
-| `providers/grok.py` | `POST /v1/images/edits` |
-| `src/` | Web console |
+| `providers/grok.py` | `POST /v1/images/edits` · `grok-imagine-image-2.0` · 2K · medium |
+| `scripts/ingest.py` / `run_job.py` | Local / Hermes runner |
+
+Imagine is an API — edits need a network. Classify, prompts, job JSON, and the local gallery run on the machine. Sign-in with X authorizes the console; the xAI key on that same account runs the pipeline.

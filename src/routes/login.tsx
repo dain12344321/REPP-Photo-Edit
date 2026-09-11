@@ -6,12 +6,14 @@ import {
   redirectToLoginIfRequired,
   useRefetchWhenConnectorReady,
 } from "@/lib/app-data";
+import { GROK_PROVIDERS, authEnabled, signIn } from "@/lib/auth/client";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { DRIVE_FOLDERS } from "@/lib/rep-edit/folders";
 import { browseDrive } from "@/lib/rep-edit/drive";
-import { authEnabled } from "@/lib/auth/client";
 
 export const Route = createFileRoute("/login")({ component: Login });
+
+const X_PROVIDER = GROK_PROVIDERS.find((p) => p.providerId === "grok-x");
 
 function Login() {
   const { user, isPending } = useCurrentUserState();
@@ -57,36 +59,40 @@ function Login() {
         <p className="eyebrow">Operator console</p>
         <h1 className="mt-2 font-display text-4xl tracking-[-0.025em]">Sign in</h1>
         <p className="mt-3 text-muted">
-          Sign in with Grok to run edits and open Drive.
+          Continue with X to run the Imagine pipeline. Drive attaches through Grok when needed.
         </p>
       </header>
 
       {!authEnabled ? (
         <p className="text-sm text-muted">Sign-in is disabled in this environment.</p>
-      ) : checking || driveErr?.kind === "pending" ? (
-        <p className="text-sm text-muted">Connecting to Grok…</p>
-      ) : driveErr?.kind === "login" && driveLogin ? (
-        <Button
-          type="button"
-          onClick={() =>
-            redirectToLoginIfRequired({
-              ok: false,
-              data: null,
-              loginRequired: true,
-              loginUrl: driveLogin,
-            })
-          }
-        >
-          Continue with Grok
-        </Button>
       ) : (
-        <div className="space-y-3">
-          <p className="text-sm text-muted">
-            {driveErr?.message ?? "Open this console from Grok to sign in. Drive and Imagine attach automatically."}
-          </p>
-          <Button type="button" variant="secondary" onClick={() => void checkDrive()}>
-            Try Drive again
-          </Button>
+        <div className="flex flex-col gap-3">
+          {X_PROVIDER ? (
+            <Button type="button" onClick={() => void signIn(X_PROVIDER.providerId, { callbackURL: "/ingest" })}>
+              Continue with X
+            </Button>
+          ) : null}
+          {driveErr?.kind === "login" && driveLogin ? (
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() =>
+                redirectToLoginIfRequired({
+                  ok: false,
+                  data: null,
+                  loginRequired: true,
+                  loginUrl: driveLogin,
+                })
+              }
+            >
+              Continue with Grok
+            </Button>
+          ) : null}
+          {checking || driveErr?.kind === "pending" ? (
+            <p className="text-sm text-muted">Connecting Drive…</p>
+          ) : driveErr && driveErr.kind !== "login" ? (
+            <p className="text-sm text-warn">{driveErr.message}</p>
+          ) : null}
         </div>
       )}
 

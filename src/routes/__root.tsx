@@ -6,28 +6,8 @@ import appCss from "../styles.css?url";
 
 const APP_NAME = "Lakeshore Listing Media · REP Edit";
 
-function publicShareHost(): string {
-  const raw = String(import.meta.env.VITE_PUBLIC_HOSTNAME ?? "")
-    .split(",")[0]
-    .trim()
-    .split(":")[0]
-    .toLowerCase();
-  if (!raw || !/^[a-z0-9.-]+$/.test(raw) || !raw.includes(".")) return "";
-  if (
-    raw === "vercel.app" ||
-    raw.endsWith(".vercel.app") ||
-    raw === "vercel.com" ||
-    raw.endsWith(".vercel.com")
-  ) {
-    return "";
-  }
-  return raw;
-}
-
 export const Route = createRootRoute({
   head: () => {
-    const host = publicShareHost();
-    const xBanner = host ? `https://${host}/x-banner.jpg` : undefined;
     return {
       meta: [
         { charSet: "utf-8" },
@@ -36,10 +16,9 @@ export const Route = createRootRoute({
         {
           name: "description",
           content:
-            "MLS stills pipeline for Lakeshore Listing Media. Sony cards in, Grok Imagine image-edit, 3:2 2K stills out. Window-truth locked.",
+            "Sony card in. 2K MLS stills out. Lakeshore Listing Media.",
         },
         { name: "theme-color", content: "#000000" },
-        ...(xBanner ? [{ property: "x:game:image", content: xBanner }] : []),
       ],
       links: [
         { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
