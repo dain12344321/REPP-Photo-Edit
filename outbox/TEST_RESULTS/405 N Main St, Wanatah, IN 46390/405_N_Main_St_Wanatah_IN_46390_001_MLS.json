@@ -1,0 +1,27 @@
+{
+  "prompt_id": "exterior_single",
+  "model": "grok-imagine-image-2.0",
+  "condition": "exterior_single",
+  "inputs": {
+    "single": "/workspace/public/gallery/wanatah/002_MLS.jpg"
+  },
+  "output": "/workspace/artifacts/outbox/TEST_RESULTS/405 N Main St, Wanatah, IN 46390/405_N_Main_St_Wanatah_IN_46390_001_MLS.jpg",
+  "status": "done",
+  "dry_run": false,
+  "prompt": "Attach the one exterior JPEG.\n\nEdit this exterior into a Zillow-hero MLS still. Warm, punchy daylight \u2014 same color and tone as a matched exterior set. Not blue, not cyan, not green-cast. The house must stand out.\n\nDaylight only. Do not change time of day. Do not add dusk, twilight, fake sun, or interior window glow.\n\nBrighten the house without flattening shadows. Sky is natural blue; siding, brick, and trim stay true and slightly warm. Grass natural with individual blade texture, rich but not neon, not painted, not smeared. Do not replace the lawn.\n\nStraighten verticals without changing the house shape. Remove nothing unless listed. Preserve painted house numbers exactly.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark. Preserve real house numbers and signage exactly. Do not overlay shot indexes or captions.\n\nTexture lock: keep carpet weave, rug pile, wood grain, brick, siding, fabric, and individual grass blades sharp and photographic. Do not smear, plasticize, paint, or replace flooring or lawn.\n\nWindow truth: frosted, privacy, reeded, textured, filmed, stained, or obscured glass is architecture \u2014 keep the glass exactly as photographed. Do not make it clear. Do not invent trees, buildings, water, sky, people, landscape, or a swimming pool behind it. Do not paint scenery outside the window opening; the wall around the frame stays the wall. Recover an exterior view only when the dark frame (or the single source) actually contains a readable view through that specific pane. If the pane is still opaque, frosted, or featureless in the dark frame, leave it. A dark or frosted pane is correct. An invented view is not. Never add a swimming pool, pond, lake, or any water that is not already visible through that pane.\n",
+  "prompt_sha256": "8f02ca9002c74e0d954421593c4f626828a3fa356a086c6178b1a447228ea26b",
+  "provider": "grok",
+  "pack_version": "2026-09-11-2k-texture",
+  "listing": "405 N Main St, Wanatah, IN 46390",
+  "slug": "405_N_Main_St_Wanatah_IN_46390",
+  "room": "Hero front",
+  "source_kind": "gold-regrade",
+  "n": 1,
+  "tag": "MLS",
+  "quality": "medium",
+  "resolution": "2k",
+  "aspect_ratio": "3:2",
+  "long_edge": 2496,
+  "note": "Wanatah gold exterior re-run at true 2K. Drive card dump did not land in this sandbox except _SA90451.",
+  "test_results": true
+}

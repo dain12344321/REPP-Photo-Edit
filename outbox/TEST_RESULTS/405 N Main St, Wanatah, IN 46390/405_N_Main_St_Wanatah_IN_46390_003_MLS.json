@@ -1,0 +1,27 @@
+{
+  "prompt_id": "interior_single",
+  "model": "grok-imagine-image-2.0",
+  "condition": "interior_single",
+  "inputs": {
+    "single": "/workspace/public/gallery/wanatah/015_MLS.jpg"
+  },
+  "output": "/workspace/artifacts/outbox/TEST_RESULTS/405 N Main St, Wanatah, IN 46390/405_N_Main_St_Wanatah_IN_46390_003_MLS.jpg",
+  "status": "done",
+  "dry_run": false,
+  "prompt": "Attach the one interior JPEG.\n\nEdit this interior into a clean MLS still. Flambient: even, bright, open room with real shadows and depth. Neutral whites when the walls are white. If the room is yellow or warm, keep that cast \u2014 even it, do not bleach it. Real wood, accurate flooring. Keep carpet pile, weave, and fabric texture sharp \u2014 not plastic, not smeared.\n\nRecover window detail only if it exists in this frame. Do not invent an exterior view. If a real view is already visible through that pane, make it an AutoHDR Lisa window view: dark, deep, rich, contrasty \u2014 1 to 1.5 stops darker than the room. Saturated outdoor color. Interior bright.\n\nIf a pane is frosted, privacy, textured, or black with no readable exterior in this frame, keep the glass as photographed. Do not clear frosted bathroom glass. Do not invent trees, buildings, sky, water, or a swimming pool behind it. Do not paint scenery past the window frame.\n\nKeep muntins, glazing bars, grilles, blinds, frosting, and film intact, evenly lit, and continuous \u2014 no dark blobs, no missing bars, no melted grid. Hard frames. No halo, no glow ring, no milky fringe.\n\nStraighten verticals without stretching the room.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark. Preserve real house numbers and signage exactly. Do not overlay shot indexes or captions.\n\nTexture lock: keep carpet weave, rug pile, wood grain, brick, siding, fabric, and individual grass blades sharp and photographic. Do not smear, plasticize, paint, or replace flooring or lawn.\n\nWindow truth: frosted, privacy, reeded, textured, filmed, stained, or obscured glass is architecture \u2014 keep the glass exactly as photographed. Do not make it clear. Do not invent trees, buildings, water, sky, people, landscape, or a swimming pool behind it. Do not paint scenery outside the window opening; the wall around the frame stays the wall. Recover an exterior view only when the dark frame (or the single source) actually contains a readable view through that specific pane. If the pane is still opaque, frosted, or featureless in the dark frame, leave it. A dark or frosted pane is correct. An invented view is not. Never add a swimming pool, pond, lake, or any water that is not already visible through that pane.\n",
+  "prompt_sha256": "fabddac0b64ca243d100c5752b90b376b90b59d0710ba1ac835eba1298fffd49",
+  "provider": "grok",
+  "pack_version": "2026-09-11-2k-texture",
+  "listing": "405 N Main St, Wanatah, IN 46390",
+  "slug": "405_N_Main_St_Wanatah_IN_46390",
+  "room": "Bedroom",
+  "source_kind": "gold-regrade",
+  "n": 3,
+  "tag": "MLS",
+  "quality": "medium",
+  "resolution": "2k",
+  "aspect_ratio": "3:2",
+  "long_edge": 2496,
+  "note": "Wanatah gold bedroom re-run at true 2K. Carpet-weave texture check.",
+  "test_results": true
+}

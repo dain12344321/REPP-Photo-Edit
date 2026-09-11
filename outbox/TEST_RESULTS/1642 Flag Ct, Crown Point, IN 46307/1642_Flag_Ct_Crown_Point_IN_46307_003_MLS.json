@@ -1,0 +1,27 @@
+{
+  "prompt_id": "drone",
+  "model": "grok-imagine-image-2.0",
+  "condition": "drone",
+  "inputs": {
+    "single": "/workspace/artifacts/card/dji/DJI_0130.JPG"
+  },
+  "output": "/workspace/artifacts/outbox/TEST_RESULTS/1642 Flag Ct, Crown Point, IN 46307/1642_Flag_Ct_Crown_Point_IN_46307_003_MLS.jpg",
+  "status": "done",
+  "dry_run": false,
+  "prompt": "Attach the aerial JPEG.\n\nClean MLS aerial. Punchy contrast, sharp detail, no softness, no haze mush.\nCorrect exposure, white balance. Sharper grass and trees with real blade and leaf texture, natural color, not neon, not Codex-muddy.\nRemove people, parked cars, and temporary clutter (bins, chairs, hoses). Rebuild driveway and lawn from nearby surfaces. Keep roof colors, roads, water, neighbors, and land shape exact. Level the horizon. Do not enlarge the lot. No fake sky, no guessed property line.\n\nKeep the exact architecture, camera angle, framing, furniture layout, materials, wall colors, flooring, windows, doors, landscaping, neighbors, and property condition. Preserve Sony 3:2 aspect ratio and original composition. Do not crop. Do not add, remove, move, enlarge, or redesign permanent features. Photoreal MLS photo, not illustration. No fake HDR, no halos, no neon grass, no orange interiors, no warped rooms, no new windows, no text, no watermark. Preserve real house numbers and signage exactly. Do not overlay shot indexes or captions.\n\nTexture lock: keep carpet weave, rug pile, wood grain, brick, siding, fabric, and individual grass blades sharp and photographic. Do not smear, plasticize, paint, or replace flooring or lawn.\n\nWindow truth: frosted, privacy, reeded, textured, filmed, stained, or obscured glass is architecture \u2014 keep the glass exactly as photographed. Do not make it clear. Do not invent trees, buildings, water, sky, people, landscape, or a swimming pool behind it. Do not paint scenery outside the window opening; the wall around the frame stays the wall. Recover an exterior view only when the dark frame (or the single source) actually contains a readable view through that specific pane. If the pane is still opaque, frosted, or featureless in the dark frame, leave it. A dark or frosted pane is correct. An invented view is not. Never add a swimming pool, pond, lake, or any water that is not already visible through that pane.\n",
+  "prompt_sha256": "d3fe5acc74c4c946756c255de1b2c13b716a7d22a32d59e5cffbb7821c7d204a",
+  "provider": "grok",
+  "pack_version": "2026-09-11-2k-texture",
+  "listing": "1642 Flag Ct, Crown Point, IN 46307",
+  "slug": "1642_Flag_Ct_Crown_Point_IN_46307",
+  "room": "Aerial front",
+  "source_kind": "card",
+  "n": 3,
+  "tag": "MLS",
+  "quality": "medium",
+  "resolution": "2k",
+  "aspect_ratio": "4:3",
+  "long_edge": 2368,
+  "note": "DJI nadir-ish front. Prompt removes cars/people. Keep lot shape.",
+  "test_results": true
+}
