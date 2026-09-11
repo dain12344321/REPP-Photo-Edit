@@ -2,17 +2,16 @@
 
 Standalone listing-stills app. Sign in with X. Drop a Sony card. Imagine at 2K. Deliver to Drive.
 
-**Download:** [GitHub](https://github.com/dain12344321/REPP-Photo-Edit) (Code → Download ZIP) · **Repo:** [dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
+**Start:** [START_HERE.md](START_HERE.md) · **Hermes / Grok:** [HERMES.md](HERMES.md) · **Repo:** [dain12344321/REPP-Photo-Edit](https://github.com/dain12344321/REPP-Photo-Edit)
 
-The shipped photo is the lakeshorelisting.media hero. Gallery, jobs, and OUTBOX start empty and fill from ingest.
+The shipped photo is the lakeshorelisting.media hero. Gallery, jobs, and inbox start empty and fill from ingest.
 
 ## Run locally
 
 You need Node 22, Python 3.10+, and an xAI key from [console.x.ai](https://console.x.ai) on the same X account that pays for Imagine.
 
 ```bash
-unzip REPP-Photo-Edit-main.zip
-cd REPP-Photo-Edit-main
+cd Lakeshore-REP-Edit
 python3 -m pip install -r requirements.txt
 npm install
 export XAI_API_KEY=xai-...
@@ -21,7 +20,7 @@ npm run dev
 
 Sign in with X in the console. Ingest a card. Run one 2K edit at a time.
 
-Headless (Hermes / Mac Mini) — no browser, same X account key:
+Headless (Hermes / Mac Mini) — paste [HERMES.md](HERMES.md) to Grok, or:
 
 ```bash
 export XAI_API_KEY=xai-...
@@ -46,5 +45,6 @@ Rules: [INSTRUCTIONS.md](INSTRUCTIONS.md). Folders: [FOLDERS.md](FOLDERS.md). He
 | `prompts/imagine-shot-prompts.md` | Frozen Imagine pack |
 | `providers/grok.py` | `POST /v1/images/edits` · `grok-imagine-image-2.0` · 2K · medium |
 | `scripts/ingest.py` / `run_job.py` | Local / Hermes runner |
+| `.grok/skills/rep-edit/` | Hermes skill |
 
 Imagine is an API — edits need a network. Classify, prompts, job JSON, and the local gallery run on the machine. Sign-in with X authorizes the console; the xAI key on that same account runs the pipeline.
