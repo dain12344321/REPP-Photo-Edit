@@ -2,25 +2,26 @@
 
 You are Grok, installing **Lakeshore Listing Media · REP Edit** on this Hermes agent.
 
-This unzipped folder is the product. Do the setup below. Do not invent a different photo pipeline. Do not use `hermes-photo-pipeline/` (that is Photomator / nano-banana, not MLS stills).
+Locked 2026-09-13: production MLS stills are **Grok Imagine 2.0 / 2K / medium**. Read `OPERATOR.md` for the INBOX → OUTBOX loop. Do not invent a different photo pipeline. Do not use `hermes-photo-pipeline/` (Photomator / nano-banana). Do not restore `reppstudio`.
 
 ## 1. Read these, in this order, before any photo
 
-1. `INSTRUCTIONS.md` — operator rules
-2. `prompts/imagine-shot-prompts.md` — frozen Imagine pack (version `2026-09-11-2k-texture`)
-3. `FOLDERS.md` — official Drive INBOX / OUTBOX
-4. `.grok/skills/rep-edit/SKILL.md` — the skill you are installing
-5. `AGENTS.md` — do / do-not for this repo
+1. `OPERATOR.md` — Hermes INBOX/OUTBOX loop (this is the fire-up brief)
+2. `INSTRUCTIONS.md` — operator rules
+3. `prompts/imagine-shot-prompts.md` — frozen Imagine pack (version `2026-09-11-2k-texture`)
+4. `FOLDERS.md` — official Drive INBOX / OUTBOX
+5. `.grok/skills/rep-edit/SKILL.md` — engine skill (on the REPP Photo bot, install as `repp-photo-grok`)
+6. `AGENTS.md` — do / do-not for this repo
 
 Never send `prompts/source-long-REFERENCE-ONLY.md` to Imagine.
 
 ## 2. Install the skill
 
-Copy the folder `.grok/skills/rep-edit/` into this Hermes agent’s skills directory so `SKILL.md` is at the skill root (name the skill `rep-edit`).
+On the **REPP Photo** Hermes profile, the live skill name is **`repp-photo-grok`** (not `rep-edit`). Copy from the companion repo `REPP-Photo-Hermes` when present. Auth is **xAI OAuth first**, OpenRouter `x-ai/grok-imagine-image-2.0` as labeled backup. Never `grok-imagine-image-quality`.
 
-If this unzipped folder **is** the Hermes workspace, you already have the skill at `.grok/skills/rep-edit/`. Read it in place. Also keep `AGENTS.md` at the project root.
+If this unzipped folder **is** the workspace, `.grok/skills/rep-edit/` is the engine skill. Keep `AGENTS.md` at the project root.
 
-Confirm the skill description mentions: Sony JPEG cards, Grok Imagine image-edit, `grok-imagine-image-2.0`, 2K, medium, 3:2, OUTBOX delivery.
+Confirm: Sony JPEG cards, Grok Imagine image-edit, `grok-imagine-image-2.0`, 2K, medium, 3:2, OUTBOX `{listing}/Grok_2K`.
 
 ## 3. Environment
 

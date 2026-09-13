@@ -166,6 +166,23 @@ class ProviderSignatureTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 grok_edit([src], "prompt", out, model="grok-imagine-image", dry_run=True)
 
+    def test_openrouter_maps_2_0_not_quality(self):
+        from providers import openrouter
+
+        self.assertEqual(
+            openrouter._resolve_model("grok-imagine-image-2.0"),
+            "x-ai/grok-imagine-image-2.0",
+        )
+        self.assertEqual(
+            openrouter._resolve_model("x-ai/grok-imagine-image-2.0"),
+            "x-ai/grok-imagine-image-2.0",
+        )
+        self.assertEqual(openrouter.OPENROUTER_MODEL_DEFAULT, "x-ai/grok-imagine-image-2.0")
+        with self.assertRaises(ValueError):
+            openrouter._resolve_model("x-ai/grok-imagine-image-quality")
+        with self.assertRaises(ValueError):
+            openrouter._resolve_model("grok-imagine-image-quality")
+
 
 class PrepareTests(unittest.TestCase):
     def test_downscales_long_edge_to_2k(self):

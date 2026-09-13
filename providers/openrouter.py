@@ -12,13 +12,21 @@ from pathlib import Path
 from rep_edit.constants import ASPECT_RATIO, MAX_INPUT_IMAGES, RESOLUTION
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/images"
-OPENROUTER_MODEL_DEFAULT = "x-ai/grok-imagine-image-quality"
+OPENROUTER_MODEL_DEFAULT = "x-ai/grok-imagine-image-2.0"
 
-# Short xAI slugs from this repo map onto OpenRouter model ids.
+# MLS stills must stay on Imagine 2.0. The quality slug invents window water and
+# will redirect to 2.0 low on 2026-11-02. Do not alias 2.0 onto quality.
+_FORBIDDEN_MODELS = frozenset(
+    {
+        "x-ai/grok-imagine-image-quality",
+        "grok-imagine-image-quality",
+        "grok-imagine-image",
+        "x-ai/grok-imagine-image",
+    }
+)
 _MODEL_ALIASES = {
-    "grok-imagine-image-2.0": "x-ai/grok-imagine-image-quality",
-    "grok-imagine-image": "x-ai/grok-imagine-image-quality",
-    "grok-imagine-image-quality": "x-ai/grok-imagine-image-quality",
+    "grok-imagine-image-2.0": "x-ai/grok-imagine-image-2.0",
+    "x-ai/grok-imagine-image-2.0": "x-ai/grok-imagine-image-2.0",
 }
 
 
@@ -56,6 +64,7 @@ def edit(
         "prompt": prompt,
         "aspect_ratio": aspect_ratio,
         "resolution": _normalize_resolution(resolution),
+        "quality": "medium",
         "output_format": "jpeg",
         "n": 1,
         "input_references": [
@@ -89,7 +98,13 @@ def edit(
 
 def _resolve_model(model: str | None) -> str:
     raw = (model or os.environ.get("OPENROUTER_MODEL") or OPENROUTER_MODEL_DEFAULT).strip()
-    return _MODEL_ALIASES.get(raw, raw)
+    resolved = _MODEL_ALIASES.get(raw, raw)
+    if raw in _FORBIDDEN_MODELS or resolved in _FORBIDDEN_MODELS or "imagine-image-quality" in resolved:
+        raise ValueError(
+            f"refusing OpenRouter model {raw!r} (resolved {resolved!r}); "
+            "MLS stills must use x-ai/grok-imagine-image-2.0, never grok-imagine-image-quality"
+        )
+    return resolved
 
 
 def _normalize_resolution(value: str) -> str:
