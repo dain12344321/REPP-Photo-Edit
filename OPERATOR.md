@@ -46,7 +46,8 @@ Never overwrite Wanatah gold (`1QRP9oHkTO7w9AZI6xCvvo0G_wueiI6KA`) or `MLS Listi
 
 ```bash
 export HERMES_HOME=/home/dain0/.hermes/profiles/repp-photo
-PY=/home/dain0/projects/repp-photo-edit/.venv/bin/python
+# Drive client lives in the Hermes venv; Imagine ingest uses the engine venv internally.
+PY=/home/dain0/.hermes/hermes-agent/venv/bin/python
 SKILL=/home/dain0/.hermes/profiles/repp-photo/skills/repp-photo-grok/scripts
 
 $PY $SKILL/process_listing.py --list-inbox
